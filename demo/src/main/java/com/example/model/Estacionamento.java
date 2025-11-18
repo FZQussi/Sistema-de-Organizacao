@@ -5,48 +5,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Estacionamento {
-    private List<Carro> vagas;
+
     private int capacidade;
+    private List<Carro> carros;
 
     public Estacionamento(int capacidade) {
         this.capacidade = capacidade;
-        this.vagas = new ArrayList<>();
+        this.carros = new ArrayList<>();
     }
 
     public boolean entrada(Carro carro) {
-        if (vagas.size() >= capacidade) {
-            System.out.println("Estacionamento cheio!");
+        if (carros.size() >= capacidade) {
+            System.out.println("⚠ O estacionamento está cheio!");
             return false;
         }
-        vagas.add(carro);
-        System.out.println("Carro " + carro.getPlaca() + " entrou às " + carro.getHoraEntrada());
+
+        carros.add(carro);
+        System.out.println("✔ Carro " + carro.getPlaca() + " entrou às " + carro.getEntrada());
         return true;
     }
 
-    public void saida(String placa) {
-        Carro carroEncontrado = null;
-        for (Carro c : vagas) {
+    public boolean saida(String placa) {
+        for (Carro c : carros) {
             if (c.getPlaca().equalsIgnoreCase(placa)) {
-                carroEncontrado = c;
-                break;
+                c.setSaida(LocalDateTime.now());
+                System.out.println("✔ Carro saiu às " + c.getSaida());
+                carros.remove(c);
+                return true;
             }
         }
 
-        if (carroEncontrado != null) {
-            carroEncontrado.setHoraSaida(LocalDateTime.now());
-            double valor = carroEncontrado.calcularValor();
-            System.out.println("Carro " + placa + " saiu às " + carroEncontrado.getHoraSaida()
-                    + ", valor a pagar: R$" + valor);
-            vagas.remove(carroEncontrado);
-        } else {
-            System.out.println("Carro não encontrado!");
-        }
+        System.out.println("❌ Carro não encontrado!");
+        return false;
     }
 
     public void listarVagas() {
-        System.out.println("Vagas ocupadas: " + vagas.size() + "/" + capacidade);
-        for (Carro c : vagas) {
-            System.out.println("- " + c.getPlaca() + " entrou às " + c.getHoraEntrada());
+        System.out.println("\n=== Carros no estacionamento ===");
+        if (carros.isEmpty()) {
+            System.out.println("Nenhum carro estacionado.");
+            return;
         }
+
+        carros.forEach(System.out::println);
     }
 }
