@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <!-- Caminho para a pasta de logs -->
+        <Property name="logPath">SistemaOrganizacaoData</Property>
+        <Property name="logFileName">app.log</Property>
+    </Properties>
+
+    <Appenders>
+        <!-- Appender para ficheiro -->
+        <File name="FileLogger" fileName="${logPath}/${logFileName}" append="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level: %msg%n"/>
+        </File>
+
+        <!-- Opcional: Console para debug -->
+        <Console name="ConsoleLogger" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss} %-5level: %msg%n"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <!-- Logger raiz -->
+        <Root level="info">
+            <AppenderRef ref="FileLogger"/>
+            <!-- <AppenderRef ref="ConsoleLogger"/> --> <!-- ativa se quiser console também -->
+        </Root>
+    </Loggers>
+</Configuration>

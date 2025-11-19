@@ -1,0 +1,51 @@
+2025-11-19 11:26:54 [main] INFO  com.example.app.Main - Iniciando a aplicação Sistema de Gestão.
+2025-11-19 11:26:54 [main] INFO  com.example.service.UserService - Carregados 4 utilizadores do ficheiro 'users.json'.
+2025-11-19 11:26:54 [main] INFO  com.example.service.GestaoEstacionamento - Gestão de estacionamento inicializada com capacidade: 10
+2025-11-19 11:27:01 [main] INFO  com.example.service.AuthService - Login bem-sucedido: admin (gerente)
+2025-11-19 11:27:01 [main] INFO  com.example.app.menu.MenuPrincipal - Login bem-sucedido: admin (gerente)
+2025-11-19 11:27:04 [main] INFO  com.example.app.menu.MenuPrincipal - Gerente 'admin' entrou no menu de gestão de utilizadores.
+2025-11-19 11:27:20 [main] INFO  com.example.app.menu.MenuGestaoUtilizadores - Listagem de utilizadores ordenada exibida. Total: 4
+2025-11-19 11:27:28 [main] INFO  com.example.app.menu.MenuGestaoUtilizadores - Listagem filtrada por tipo 'gerente' exibida. Total: 1
+2025-11-19 11:27:51 [main] INFO  com.example.app.menu.MenuGestaoUtilizadores - Listagem paginada exibida. Página: 0, Tamanho: 10, Registos exibidos: 4
+2025-11-19 11:27:59 [main] INFO  com.example.app.menu.MenuGestaoUtilizadores - Voltando ao menu de gestão de utilizadores.
+2025-11-19 11:28:02 [main] ERROR com.example.app.Main - Ocorreu um erro inesperado na aplicação.
+java.lang.NumberFormatException: For input string: ""
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:67) ~[?:?]
+	at java.lang.Integer.parseInt(Integer.java:678) ~[?:?]
+	at java.lang.Integer.parseInt(Integer.java:786) ~[?:?]
+	at com.example.app.menu.MenuGestaoUtilizadores.mostrar(MenuGestaoUtilizadores.java:36) ~[classes/:?]
+	at com.example.app.menu.MenuPrincipal.iniciar(MenuPrincipal.java:43) ~[classes/:?]
+	at com.example.app.Main.main(Main.java:15) [classes/:?]
+2025-11-19 11:28:02 [main] INFO  com.example.app.Main - Aplicação encerrada.
+2025-11-19 11:30:36 [main] INFO  com.example.app.Main - Iniciando a aplicação Sistema de Gestão.
+2025-11-19 11:30:36 [main] INFO  com.example.service.UserService - Carregados 4 utilizadores do ficheiro 'users.json'.
+2025-11-19 11:30:36 [main] INFO  com.example.service.GestaoEstacionamento - Gestão de estacionamento inicializada com capacidade: 10
+2025-11-19 11:30:41 [main] INFO  com.example.service.AuthService - Login bem-sucedido: admin (gerente)
+2025-11-19 11:30:41 [main] INFO  com.example.app.menu.MenuPrincipal - Login bem-sucedido: admin (gerente)
+2025-11-19 11:30:42 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: ""
+2025-11-19 11:30:42 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: ""
+2025-11-19 11:30:43 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: ""
+2025-11-19 11:30:43 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: ""
+2025-11-19 11:30:43 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: ""
+2025-11-19 11:30:43 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: ""
+2025-11-19 11:30:43 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: ""
+2025-11-19 11:30:45 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: "g"
+2025-11-19 11:30:45 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: "g"
+2025-11-19 11:30:45 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: "g"
+2025-11-19 11:30:46 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: "g"
+2025-11-19 11:30:46 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: "g"
+2025-11-19 11:30:46 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: "g"
+2025-11-19 11:30:47 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: "g"
+2025-11-19 11:30:47 [main] INFO  com.example.app.menu.MenuPrincipal - Gerente 'admin' entrou no menu de gestão de utilizadores.
+2025-11-19 11:30:49 [main] INFO  com.example.app.menu.MenuGestaoUtilizadores - Voltando ao menu anterior.
+2025-11-19 11:30:49 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: ""
+2025-11-19 11:30:49 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: ""
+2025-11-19 11:30:49 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: ""
+2025-11-19 11:30:50 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: ""
+2025-11-19 11:30:50 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: ""
+2025-11-19 11:30:50 [main] WARN  com.example.app.menu.MenuPrincipal - Entrada inválida (não é número): For input string: ""
+2025-11-19 11:30:51 [main] ERROR com.example.app.Main - Ocorreu um erro inesperado na aplicação.
+java.util.NoSuchElementException: No line found
+	at java.util.Scanner.nextLine(Scanner.java:1651) ~[?:?]
+	at com.example.app.menu.MenuPrincipal.iniciar(MenuPrincipal.java:44) ~[classes/:?]
+	at com.example.app.Main.main(Main.java:15) [classes/:?]

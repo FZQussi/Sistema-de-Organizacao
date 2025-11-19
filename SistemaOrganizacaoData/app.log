@@ -1,0 +1,42 @@
+2025-11-19 11:57:48 [main] INFO : Ficheiro users.json criado em: C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\users.json
+2025-11-19 11:57:48 [main] INFO : Ficheiro turnos.txt criado em: C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\turnos.txt
+2025-11-19 11:57:48 [main] INFO : Estrutura de ficheiros inicializada com sucesso.
+2025-11-19 11:57:48 [main] INFO : Iniciando a aplicação Sistema de Gestão.
+2025-11-19 11:57:48 [main] INFO : Ficheiro 'C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\users.json' não encontrado ou vazio. Lista de utilizadores inicializada vazia.
+2025-11-19 11:57:48 [main] INFO : Gestão de estacionamento inicializada com capacidade: 10
+2025-11-19 11:57:58 [main] WARN : Tentativa de login falhada: utilizador 'admin' não encontrado.
+2025-11-19 11:57:58 [main] WARN : Falha de login para username: admin
+2025-11-19 11:58:35 [main] WARN : Tentativa de login falhada: utilizador 'admin' não encontrado.
+2025-11-19 11:58:35 [main] WARN : Falha de login para username: admin
+2025-11-19 11:58:37 [main] ERROR: Ocorreu um erro inesperado na aplicação.
+java.util.NoSuchElementException: No line found
+	at java.util.Scanner.nextLine(Scanner.java:1651) ~[?:?]
+	at com.example.app.menu.MenuPrincipal.fazerLogin(MenuPrincipal.java:103) ~[classes/:?]
+	at com.example.app.menu.MenuPrincipal.iniciar(MenuPrincipal.java:23) ~[classes/:?]
+	at com.example.app.Main.main(Main.java:26) [classes/:?]
+2025-11-19 11:58:40 [main] INFO : Estrutura de ficheiros inicializada com sucesso.
+2025-11-19 11:58:40 [main] INFO : Iniciando a aplicação Sistema de Gestão.
+2025-11-19 11:58:40 [main] INFO : Carregados 4 utilizadores do ficheiro 'C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\users.json'.
+2025-11-19 11:58:40 [main] INFO : Gestão de estacionamento inicializada com capacidade: 10
+2025-11-19 11:58:44 [main] INFO : Login bem-sucedido: admin (gerente)
+2025-11-19 11:58:44 [main] INFO : Login bem-sucedido: admin (gerente)
+2025-11-19 11:58:46 [main] INFO : Logout efetuado: admin (gerente)
+2025-11-19 11:58:46 [main] INFO : Usuário 'admin' efetuou logout.
+2025-11-19 11:58:46 [main] INFO : Aplicação encerrada.
+2025-11-19 12:05:42 [main] INFO : Estrutura de ficheiros inicializada com sucesso.
+2025-11-19 12:05:42 [main] INFO : Iniciando a aplicação Sistema de Gestão.
+2025-11-19 12:05:42 [main] INFO : Carregados 4 utilizadores do ficheiro 'C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\users.json'.
+2025-11-19 12:05:42 [main] INFO : Gestão de estacionamento inicializada com capacidade: 10
+2025-11-19 12:05:46 [main] INFO : Login bem-sucedido: admin (gerente)
+2025-11-19 12:05:46 [main] INFO : Login bem-sucedido: admin (gerente)
+2025-11-19 12:05:49 [main] INFO : Gerente 'admin' entrou no menu de gestão de utilizadores.
+2025-11-19 12:06:18 [main] ERROR: Ocorreu um erro inesperado na aplicação.
+java.lang.NumberFormatException: For input string: "user"
+	at jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054) ~[?:?]
+	at jdk.internal.math.FloatingDecimal.parseDouble(FloatingDecimal.java:110) ~[?:?]
+	at java.lang.Double.parseDouble(Double.java:651) ~[?:?]
+	at com.example.app.menu.MenuGestaoUtilizadores.criar(MenuGestaoUtilizadores.java:160) ~[classes/:?]
+	at com.example.app.menu.MenuGestaoUtilizadores.mostrar(MenuGestaoUtilizadores.java:40) ~[classes/:?]
+	at com.example.app.menu.MenuPrincipal.iniciar(MenuPrincipal.java:55) ~[classes/:?]
+	at com.example.app.Main.main(Main.java:26) [classes/:?]
+2025-11-19 12:06:18 [main] INFO : Aplicação encerrada.

@@ -5,7 +5,9 @@ import com.example.service.UserService;
 import com.example.utils.PasswordUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -131,112 +133,140 @@ public class MenuGestaoUtilizadores {
     // CRIAR / ALTERAR / REMOVER
     // -------------------
 
-    private void criar() {
+private void criar() {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    String dataNascimento;
 
-        System.out.print("Novo username: ");
-        String username = sc.nextLine();
+    System.out.print("Novo username: ");
+    String username = sc.nextLine();
 
-        System.out.print("Password: ");
-        String pass = sc.nextLine();
-        String hash = PasswordUtils.hash(pass);
-        logger.debug("Password digitada: {}, Hash gerado: {}", pass, hash);
+    System.out.print("Password: ");
+    String pass = sc.nextLine();
+    String hash = PasswordUtils.hash(pass);
+    logger.debug("Password digitada: {}, Hash gerado: {}", pass, hash);
 
-        System.out.print("Nome: ");
-        String nome = sc.nextLine();
+    System.out.print("Nome: ");
+    String nome = sc.nextLine();
 
-        System.out.print("Sobrenome: ");
-        String sobrenome = sc.nextLine();
+    System.out.print("Sobrenome: ");
+    String sobrenome = sc.nextLine();
 
-        System.out.print("Descrição: ");
-        String descricao = sc.nextLine();
+    System.out.print("Descrição: ");
+    String descricao = sc.nextLine();
 
-        System.out.print("Nacionalidade: ");
-        String nacionalidade = sc.nextLine();
+    System.out.print("Nacionalidade: ");
+    String nacionalidade = sc.nextLine();
 
+    // Validação da data de nascimento
+    while (true) {
         System.out.print("Data de nascimento (AAAA-MM-DD): ");
-        String data = sc.nextLine();
-
-        System.out.print("Salário: ");
-        double salario = Double.parseDouble(sc.nextLine());
-
-        System.out.print("Turno entrada (HH:mm): ");
-        String horaEntrada = sc.nextLine();
-
-        System.out.print("Turno saída (HH:mm): ");
-        String horaSaida = sc.nextLine();
-
-        String tipo;
-        do {
-            System.out.print("Tipo (operador/gerente): ");
-            tipo = sc.nextLine().toLowerCase();
-        } while (!tipo.equals("operador") && !tipo.equals("gerente"));
-
-        Utilizador novo = new Utilizador(
-                username, hash, tipo, nome, sobrenome,
-                descricao, nacionalidade, data,
-                salario, horaEntrada, horaSaida
-        );
-
-        userService.addUser(novo);
-        logger.info("Novo utilizador criado: {} ({})", username, tipo);
-    }
-
-    private void alterar() {
-        listarOrdenado();
-
-        System.out.print("Username a alterar: ");
-        String uname = sc.nextLine();
-
-        Utilizador atual = userService.getByUsername(uname);
-
-        if (atual == null) {
-            System.out.println("Utilizador não encontrado.");
-            logger.warn("Tentativa de alterar utilizador inexistente: {}", uname);
-            return;
+        dataNascimento = sc.nextLine();
+        try {
+            LocalDate.parse(dataNascimento, formatter);
+            break; // formato válido
+        } catch (DateTimeParseException e) {
+            System.out.println("Formato inválido. Use AAAA-MM-DD.");
+            logger.warn("Data de nascimento inválida digitada: {}", dataNascimento);
         }
-
-        System.out.println("Deixar vazio para manter o valor atual.\n");
-
-        System.out.print("Novo nome (" + atual.getNome() + "): ");
-        String nome = sc.nextLine();
-        if (!nome.isEmpty()) atual.setNome(nome);
-
-        System.out.print("Novo sobrenome (" + atual.getSobrenome() + "): ");
-        String sb = sc.nextLine();
-        if (!sb.isEmpty()) atual.setSobrenome(sb);
-
-        System.out.print("Nova descrição (" + atual.getDescricao() + "): ");
-        String desc = sc.nextLine();
-        if (!desc.isEmpty()) atual.setDescricao(desc);
-
-        System.out.print("Nova nacionalidade (" + atual.getNacionalidade() + "): ");
-        String nac = sc.nextLine();
-        if (!nac.isEmpty()) atual.setNacionalidade(nac);
-
-        System.out.print("Nova data (" + atual.getDataNascimento() + "): ");
-        String data = sc.nextLine();
-        if (!data.isEmpty()) atual.setDataNascimento(data);
-
-        System.out.print("Novo salário (" + atual.getSalario() + "): ");
-        String sal = sc.nextLine();
-        if (!sal.isEmpty()) atual.setSalario(Double.parseDouble(sal));
-
-        System.out.print("Novo turno entrada (" + atual.getTurnoEntrada() + "): ");
-        String te = sc.nextLine();
-        if (!te.isEmpty()) atual.setTurnoEntrada(te);
-
-        System.out.print("Novo turno saída (" + atual.getTurnoSaida() + "): ");
-        String ts = sc.nextLine();
-        if (!ts.isEmpty()) atual.setTurnoSaida(ts);
-
-        System.out.print("Novo tipo (" + atual.getTipo() + "): ");
-        String tipo = sc.nextLine();
-        if (!tipo.isEmpty()) atual.setTipo(tipo);
-
-        userService.updateUser(uname, atual);
-        System.out.println("Utilizador atualizado.");
-        logger.info("Utilizador atualizado: {}", uname);
     }
+
+    System.out.print("Salário: ");
+    double salario = Double.parseDouble(sc.nextLine());
+
+    System.out.print("Turno entrada (HH:mm): ");
+    String horaEntrada = sc.nextLine();
+
+    System.out.print("Turno saída (HH:mm): ");
+    String horaSaida = sc.nextLine();
+
+    String tipo;
+    do {
+        System.out.print("Tipo (operador/gerente): ");
+        tipo = sc.nextLine().toLowerCase();
+    } while (!tipo.equals("operador") && !tipo.equals("gerente"));
+
+    Utilizador novo = new Utilizador(
+            username, hash, tipo, nome, sobrenome,
+            descricao, nacionalidade, dataNascimento,
+            salario, horaEntrada, horaSaida
+    );
+
+    userService.addUser(novo);
+    logger.info("Novo utilizador criado: {} ({})", username, tipo);
+}
+
+private void alterar() {
+    listarOrdenado();
+
+    System.out.print("Username a alterar: ");
+    String uname = sc.nextLine();
+
+    Utilizador atual = userService.getByUsername(uname);
+
+    if (atual == null) {
+        System.out.println("Utilizador não encontrado.");
+        logger.warn("Tentativa de alterar utilizador inexistente: {}", uname);
+        return;
+    }
+
+    System.out.println("Deixar vazio para manter o valor atual.\n");
+
+    System.out.print("Novo nome (" + atual.getNome() + "): ");
+    String nome = sc.nextLine();
+    if (!nome.isEmpty()) atual.setNome(nome);
+
+    System.out.print("Novo sobrenome (" + atual.getSobrenome() + "): ");
+    String sb = sc.nextLine();
+    if (!sb.isEmpty()) atual.setSobrenome(sb);
+
+    System.out.print("Nova descrição (" + atual.getDescricao() + "): ");
+    String desc = sc.nextLine();
+    if (!desc.isEmpty()) atual.setDescricao(desc);
+
+    System.out.print("Nova nacionalidade (" + atual.getNacionalidade() + "): ");
+    String nac = sc.nextLine();
+    if (!nac.isEmpty()) atual.setNacionalidade(nac);
+
+    // Validação da data de nascimento
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    System.out.print("Nova data (" + atual.getDataNascimento() + "): ");
+    String dataInput = sc.nextLine();
+    if (!dataInput.isEmpty()) {
+        boolean valido = false;
+        while (!valido) {
+            try {
+                LocalDate.parse(dataInput, formatter);
+                atual.setDataNascimento(dataInput);
+                valido = true;
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato inválido. Use AAAA-MM-DD.");
+                logger.warn("Data de nascimento inválida digitada: {}", dataInput);
+                System.out.print("Nova data (" + atual.getDataNascimento() + "): ");
+                dataInput = sc.nextLine();
+            }
+        }
+    }
+
+    System.out.print("Novo salário (" + atual.getSalario() + "): ");
+    String sal = sc.nextLine();
+    if (!sal.isEmpty()) atual.setSalario(Double.parseDouble(sal));
+
+    System.out.print("Novo turno entrada (" + atual.getTurnoEntrada() + "): ");
+    String te = sc.nextLine();
+    if (!te.isEmpty()) atual.setTurnoEntrada(te);
+
+    System.out.print("Novo turno saída (" + atual.getTurnoSaida() + "): ");
+    String ts = sc.nextLine();
+    if (!ts.isEmpty()) atual.setTurnoSaida(ts);
+
+    System.out.print("Novo tipo (" + atual.getTipo() + "): ");
+    String tipo = sc.nextLine();
+    if (!tipo.isEmpty()) atual.setTipo(tipo);
+
+    userService.updateUser(uname, atual);
+    System.out.println("Utilizador atualizado.");
+    logger.info("Utilizador atualizado: {}", uname);
+}
 
     private void remover() {
         listarOrdenado();
