@@ -69,27 +69,29 @@ public class MenuPrincipal {
         }
     }
 
-    private Utilizador fazerLogin() {
-        Utilizador user;
+private Utilizador fazerLogin() {
+    Utilizador user;
 
-        while (true) {
-            System.out.print("Username: ");
-            String username = sc.nextLine();
+    while (true) {
+        System.out.print("Username: ");
+        String username = sc.nextLine();
 
-            System.out.print("Password: ");
-            String password = sc.nextLine();
+        System.out.print("Password: ");
+        String password = sc.nextLine();
 
-            user = auth.login(username, password);
+        user = auth.login(username, password);
 
-            if (user != null) {
-                System.out.println("Login efetuado: " + user.getUsername() +
-                        " (" + user.getTipo() + ")");
-                return user;
-            }
-
-            System.out.println("Login falhou. Tente novamente.");
+        if (user != null) {
+            // Mostra nome completo, tipo e outros detalhes
+            System.out.println("Login efetuado: " + user.getNome() + " " + user.getSobrenome() +
+                               " (" + user.getTipo() + ")");
+            return user;
         }
+
+        System.out.println("Login falhou. Username ou password incorretos. Tente novamente.\n");
     }
+}
+
 
     private void registrarEntrada() {
         System.out.print("Placa: ");

@@ -1,124 +1,109 @@
 package com.example.service;
 
 import com.example.model.Utilizador;
+import com.example.utils.PasswordUtils;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.GsonBuilder;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
+import java.util.*;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserService {
 
-    private List<Utilizador> utilizadores;
     private final String filePath = "users.json";
-
-    // GSON com Pretty Printing (JSON bonito!)
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private List<Utilizador> utilizadores = new ArrayList<>();
 
     public UserService() {
-        this.utilizadores = new ArrayList<>();
         loadUsers();
     }
 
-    // --------------------------------------------
-    //               CRUD UTILIZADORES
-    // --------------------------------------------
-
-    public boolean addUser(String username, String password, String tipo) {
-        if (exists(username)) {
-            System.out.println("Erro: O utilizador já existe!");
-            return false;
-        }
-
-        utilizadores.add(new Utilizador(username, password, tipo));
+    public void addUser(Utilizador u) {
+        utilizadores.add(u);
         saveUsers();
-        System.out.println("Utilizador criado com sucesso.");
-        return true;
     }
 
-    public boolean updateUser(String username, String newPassword, String newTipo) {
-        Utilizador u = getUser(username);
+    public void updateUser(String username, Utilizador novosDados) {
 
-        if (u == null) {
-            System.out.println("Erro: Utilizador não encontrado.");
-            return false;
-        }
-
-        u.setPassword(newPassword);
-        u.setTipo(newTipo);
-
-        saveUsers();
-        System.out.println("Utilizador atualizado com sucesso.");
-        return true;
-    }
-
-    public boolean removeUser(String username) {
-        Utilizador u = getUser(username);
-
-        if (u == null) {
-            System.out.println("Erro: Utilizador não encontrado.");
-            return false;
-        }
-
-        utilizadores.remove(u);
-        saveUsers();
-        System.out.println("Utilizador removido com sucesso.");
-        return true;
-    }
-
-    // --------------------------------------------
-    //             MÉTODOS DE SUPORTE
-    // --------------------------------------------
-
-    public Utilizador getUser(String username) {
-        for (Utilizador u : utilizadores) {
-            if (u.getUsername().equalsIgnoreCase(username)) {
-                return u;
+        for (int i = 0; i < utilizadores.size(); i++) {
+            if (utilizadores.get(i).getUsername().equals(username)) {
+                utilizadores.set(i, novosDados);
+                saveUsers();
+                return;
             }
         }
-        return null;
     }
 
-    public boolean exists(String username) {
-        return getUser(username) != null;
+    public void removeUser(String username) {
+        utilizadores.removeIf(u -> u.getUsername().equals(username));
+        saveUsers();
     }
 
-    public List<Utilizador> getAllUsers() {
-        return new ArrayList<>(utilizadores); // Protege a lista original
+    public Utilizador getByUsername(String username) {
+        return utilizadores.stream()
+                .filter(u -> u.getUsername().equals(username))
+                .findFirst().orElse(null);
     }
 
-    // --------------------------------------------
-    //              JSON (LOAD & SAVE)
-    // --------------------------------------------
+    // LISTAGEM ORDENADA
+    public List<Utilizador> listarOrdenado() {
+        return utilizadores.stream()
+                .sorted(Comparator.comparing(Utilizador::getUsername))
+                .toList();
+    }
+
+    // FILTRAR POR TIPO
+    public List<Utilizador> listarPorTipo(String tipo) {
+        return utilizadores.stream()
+                .filter(u -> u.getTipo().equalsIgnoreCase(tipo))
+                .sorted(Comparator.comparing(Utilizador::getUsername))
+                .toList();
+    }
+
+    // PESQUISAR POR NOME
+    public List<Utilizador> buscarPorNome(String nome) {
+        return utilizadores.stream()
+                .filter(u -> (u.getNome() + " " + u.getSobrenome()).toLowerCase()
+                        .contains(nome.toLowerCase()))
+                .toList();
+    }
+
+    // PAGINAÇÃO
+    public List<Utilizador> listarPaginado(int pagina, int tamanho) {
+        int inicio = pagina * tamanho;
+
+        if (inicio >= utilizadores.size())
+            return Collections.emptyList();
+
+        int fim = Math.min(inicio + tamanho, utilizadores.size());
+
+        return utilizadores.subList(inicio, fim);
+    }
 
     private void loadUsers() {
-        try (FileReader reader = new FileReader(filePath)) {
+        try {
+            File file = new File(filePath);
+            if (!file.exists()) return;
 
-            Type listType = new TypeToken<List<Utilizador>>() {}.getType();
-            List<Utilizador> loadedUsers = gson.fromJson(reader, listType);
-
-            if (loadedUsers != null) {
-                this.utilizadores = loadedUsers;
-            }
-
-        } catch (IOException e) {
-            System.out.println("Arquivo users.json não encontrado. Será criado.");
-            saveUsers(); // cria um novo vazio
+            Reader reader = new FileReader(file);
+            Type listType = new TypeToken<ArrayList<Utilizador>>(){}.getType();
+            utilizadores = new Gson().fromJson(reader, listType);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     private void saveUsers() {
         try (Writer writer = new FileWriter(filePath)) {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             gson.toJson(utilizadores, writer);
         } catch (IOException e) {
-            System.out.println("Erro ao salvar utilizadores!");
             e.printStackTrace();
         }
+    }
+
+    public List<Utilizador> getAllUsers() {
+        return utilizadores;
     }
 }

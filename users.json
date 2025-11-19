@@ -1,7 +1,7 @@
 [
   {
     "username": "admin",
-    "password": "$2a$10$9Ikj9dJL8Cr.cRs5ujPxmOEZRIaYwBkSPZ/JA2.qb04EQWJHCZumy",
+    "password": "$2a$10$Umf7D3vG8QmnOBYyRiEmt.S/cnhq6OXTTG..DfqvcOKbLWVLflZmu",
     "tipo": "gerente"
   },
   {
@@ -12,6 +12,11 @@
   {
     "username": "user",
     "password": "$2a$10$lbETDb9sfUiydeyi7Qksv.ZCeZ61s8a2PMlp5txvk4pLiWQIw.q4W",
+    "tipo": "operador"
+  },
+  {
+    "username": "user2",
+    "password": "$2a$10$V5hQOaUgfgK46ERAGJkqdef79A56w4aUJIs2SXbcapn8zy01Bk3Re",
     "tipo": "operador"
   }
 ]

@@ -5,52 +5,67 @@ import com.example.utils.PasswordUtils;
 
 public class AuthService {
 
-    private UserService userService;
+    private final UserService userService;
     private Utilizador loggedUser;
 
     public AuthService(UserService userService) {
         this.userService = userService;
-        this.loggedUser = null;
     }
 
     /**
-     * Tenta fazer login com username e password
-     * @param username
-     * @param password
-     * @return Utilizador logado se sucesso, null se falhar
+     * Tenta autenticar o utilizador com username e password.
+     * Retorna o Utilizador logado ou null se falhar.
      */
     public Utilizador login(String username, String password) {
-        Utilizador u = userService.login(username, password);
-        if (u != null) {
-            loggedUser = u;
+
+        Utilizador user = userService.getByUsername(username);
+
+        if (user == null) {
+            return null; // Utilizador não existe
         }
+
+        // Verificação segura com bcrypt
+        if (!PasswordUtils.verify(password, user.getPassword())) {
+            return null; // Password incorreta
+        }
+
+        this.loggedUser = user;
         return loggedUser;
     }
 
     /**
-     * Logout do utilizador
+     * Termina sessão do utilizador atual.
      */
     public void logout() {
-        if (loggedUser != null) {
-            System.out.println("Logout: " + loggedUser.getUsername());
-            loggedUser = null;
-        }
+        this.loggedUser = null;
     }
 
     /**
-     * Retorna o utilizador logado atualmente
-     * @return Utilizador logado ou null
+     * Retorna o utilizador atualmente logado.
      */
     public Utilizador getLoggedUser() {
         return loggedUser;
     }
 
     /**
-     * Verifica se o utilizador logado é gerente
-     * @return true se gerente, false caso contrário
+     * Verifica se algum utilizador está logado.
+     */
+    public boolean isLogged() {
+        return loggedUser != null;
+    }
+
+    /**
+     * Verifica se o utilizador logado é do tipo gerente.
      */
     public boolean isGerente() {
-        return loggedUser != null && loggedUser.getTipo().equalsIgnoreCase("gerente");
+        return loggedUser != null && "gerente".equalsIgnoreCase(loggedUser.getTipo());
+    }
+
+    /**
+     * Verifica se o utilizador logado é do tipo operador.
+     */
+    public boolean isOperador() {
+        return loggedUser != null && "operador".equalsIgnoreCase(loggedUser.getTipo());
     }
 }
 
