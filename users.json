@@ -1,1 +1,17 @@
-[{"username":"admin","password":"$2a$10$9Ikj9dJL8Cr.cRs5ujPxmOEZRIaYwBkSPZ/JA2.qb04EQWJHCZumy","tipo":"gerente"},{"username":"nigga","password":"$2a$10$YH.Ffn65M/pg6Hi7tst2h.fi3lcDJ/VSKMRG8x.dylrWWu9K2ytP6","tipo":"operador"}]
+[
+  {
+    "username": "admin",
+    "password": "$2a$10$9Ikj9dJL8Cr.cRs5ujPxmOEZRIaYwBkSPZ/JA2.qb04EQWJHCZumy",
+    "tipo": "gerente"
+  },
+  {
+    "username": "nigga",
+    "password": "$2a$10$YH.Ffn65M/pg6Hi7tst2h.fi3lcDJ/VSKMRG8x.dylrWWu9K2ytP6",
+    "tipo": "operador"
+  },
+  {
+    "username": "user",
+    "password": "$2a$10$lbETDb9sfUiydeyi7Qksv.ZCeZ61s8a2PMlp5txvk4pLiWQIw.q4W",
+    "tipo": "operador"
+  }
+]

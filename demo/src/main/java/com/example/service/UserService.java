@@ -1,11 +1,14 @@
 package com.example.service;
 
 import com.example.model.Utilizador;
-import com.example.utils.PasswordUtils;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.*;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,60 +16,109 @@ import java.util.List;
 public class UserService {
 
     private List<Utilizador> utilizadores;
-    private final String filePath = "users.json"; // ou "src/main/resources/users.json"
+    private final String filePath = "users.json";
 
+    // GSON com Pretty Printing (JSON bonito!)
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public UserService() {
-        utilizadores = new ArrayList<>();
+        this.utilizadores = new ArrayList<>();
         loadUsers();
     }
 
-    // Lê ficheiro JSON
+    // --------------------------------------------
+    //               CRUD UTILIZADORES
+    // --------------------------------------------
+
+    public boolean addUser(String username, String password, String tipo) {
+        if (exists(username)) {
+            System.out.println("Erro: O utilizador já existe!");
+            return false;
+        }
+
+        utilizadores.add(new Utilizador(username, password, tipo));
+        saveUsers();
+        System.out.println("Utilizador criado com sucesso.");
+        return true;
+    }
+
+    public boolean updateUser(String username, String newPassword, String newTipo) {
+        Utilizador u = getUser(username);
+
+        if (u == null) {
+            System.out.println("Erro: Utilizador não encontrado.");
+            return false;
+        }
+
+        u.setPassword(newPassword);
+        u.setTipo(newTipo);
+
+        saveUsers();
+        System.out.println("Utilizador atualizado com sucesso.");
+        return true;
+    }
+
+    public boolean removeUser(String username) {
+        Utilizador u = getUser(username);
+
+        if (u == null) {
+            System.out.println("Erro: Utilizador não encontrado.");
+            return false;
+        }
+
+        utilizadores.remove(u);
+        saveUsers();
+        System.out.println("Utilizador removido com sucesso.");
+        return true;
+    }
+
+    // --------------------------------------------
+    //             MÉTODOS DE SUPORTE
+    // --------------------------------------------
+
+    public Utilizador getUser(String username) {
+        for (Utilizador u : utilizadores) {
+            if (u.getUsername().equalsIgnoreCase(username)) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public boolean exists(String username) {
+        return getUser(username) != null;
+    }
+
+    public List<Utilizador> getAllUsers() {
+        return new ArrayList<>(utilizadores); // Protege a lista original
+    }
+
+    // --------------------------------------------
+    //              JSON (LOAD & SAVE)
+    // --------------------------------------------
+
     private void loadUsers() {
-        try (Reader reader = new FileReader(filePath)) {
-            Type listType = new TypeToken<ArrayList<Utilizador>>(){}.getType();
-            utilizadores = new Gson().fromJson(reader, listType);
-            if(utilizadores == null) utilizadores = new ArrayList<>();
-        } catch (FileNotFoundException e) {
-            System.out.println("users.json não existe, será criado ao adicionar utilizadores.");
+        try (FileReader reader = new FileReader(filePath)) {
+
+            Type listType = new TypeToken<List<Utilizador>>() {}.getType();
+            List<Utilizador> loadedUsers = gson.fromJson(reader, listType);
+
+            if (loadedUsers != null) {
+                this.utilizadores = loadedUsers;
+            }
+
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Arquivo users.json não encontrado. Será criado.");
+            saveUsers(); // cria um novo vazio
         }
     }
 
-    // Guarda no ficheiro JSON
     private void saveUsers() {
         try (Writer writer = new FileWriter(filePath)) {
-            new Gson().toJson(utilizadores, writer);
+            gson.toJson(utilizadores, writer);
         } catch (IOException e) {
+            System.out.println("Erro ao salvar utilizadores!");
             e.printStackTrace();
         }
     }
-
-    // Adicionar utilizador
-    public void addUser(String username, String password, String tipo) {
-        String hash = PasswordUtils.hash(password);
-        Utilizador u = new Utilizador(username, hash, tipo);
-        utilizadores.add(u);
-        saveUsers();
-        System.out.println("Utilizador " + username + " criado com sucesso!");
-    }
-
-    // Login
-public Utilizador login(String username, String password) {
-    for (Utilizador u : utilizadores) {
-        if (u.getUsername().equals(username) && PasswordUtils.verify(password, u.getPassword())) {
-            return u;
-        }
-    }
-    return null;
-}
-
-
-    // Retorna todos utilizadores (para menu do gerente)
-    public List<Utilizador> getAllUsers() {
-        return utilizadores;
-    }
-
-    
 }
