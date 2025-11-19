@@ -1,2 +1,0 @@
-LOGIN | Operador: admin | Início: 2025-11-18T20:20:57.149819300 | Fim: -
-LOGOUT | Operador: admin | Início: 2025-11-18T20:20:57.149819300 | Fim: 2025-11-18T21:26:17.670082700

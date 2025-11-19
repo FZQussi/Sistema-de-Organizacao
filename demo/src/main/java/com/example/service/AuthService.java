@@ -2,8 +2,12 @@ package com.example.service;
 
 import com.example.model.Utilizador;
 import com.example.utils.PasswordUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class AuthService {
+
+    private static final Logger logger = LogManager.getLogger(AuthService.class);
 
     private final UserService userService;
     private Utilizador loggedUser;
@@ -21,15 +25,18 @@ public class AuthService {
         Utilizador user = userService.getByUsername(username);
 
         if (user == null) {
+            logger.warn("Tentativa de login falhada: utilizador '{}' não encontrado.", username);
             return null; // Utilizador não existe
         }
 
         // Verificação segura com bcrypt
         if (!PasswordUtils.verify(password, user.getPassword())) {
+            logger.warn("Tentativa de login falhada: password incorreta para utilizador '{}'.", username);
             return null; // Password incorreta
         }
 
         this.loggedUser = user;
+        logger.info("Login bem-sucedido: {} ({})", username, user.getTipo());
         return loggedUser;
     }
 
@@ -37,7 +44,12 @@ public class AuthService {
      * Termina sessão do utilizador atual.
      */
     public void logout() {
-        this.loggedUser = null;
+        if (loggedUser != null) {
+            logger.info("Logout efetuado: {} ({})", loggedUser.getUsername(), loggedUser.getTipo());
+            this.loggedUser = null;
+        } else {
+            logger.warn("Tentativa de logout quando nenhum utilizador está logado.");
+        }
     }
 
     /**
@@ -68,4 +80,3 @@ public class AuthService {
         return loggedUser != null && "operador".equalsIgnoreCase(loggedUser.getTipo());
     }
 }
-

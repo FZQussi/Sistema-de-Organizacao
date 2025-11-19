@@ -3,11 +3,15 @@ package com.example.app.menu;
 import com.example.model.Utilizador;
 import com.example.service.UserService;
 import com.example.utils.PasswordUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class MenuGestaoUtilizadores {
+
+    private static final Logger logger = LogManager.getLogger(MenuGestaoUtilizadores.class);
 
     private final UserService userService;
     private final Scanner sc = new Scanner(System.in);
@@ -36,8 +40,8 @@ public class MenuGestaoUtilizadores {
                 case 2 -> criar();
                 case 3 -> alterar();
                 case 4 -> remover();
-                case 0 -> System.out.println("A voltar…");
-                default -> System.out.println("Opção inválida!");
+                case 0 -> logger.info("Voltando ao menu anterior.");
+                default -> logger.warn("Opção inválida no menu principal: {}", opcao);
             }
 
         } while (opcao != 0);
@@ -65,8 +69,8 @@ public class MenuGestaoUtilizadores {
                 case 2 -> filtrarTipo();
                 case 3 -> procurarNome();
                 case 4 -> listarPaginado();
-                case 0 -> {}
-                default -> System.out.println("Opção inválida!");
+                case 0 -> logger.info("Voltando ao menu de gestão de utilizadores.");
+                default -> logger.warn("Opção inválida no sub-menu de listagem: {}", opcao);
             }
 
         } while (opcao != 0);
@@ -75,20 +79,23 @@ public class MenuGestaoUtilizadores {
     private void listarOrdenado() {
         List<Utilizador> lista = userService.listarOrdenado();
         mostrarLista(lista);
+        logger.info("Listagem de utilizadores ordenada exibida. Total: {}", lista.size());
     }
 
     private void filtrarTipo() {
         System.out.print("Tipo (operador/gerente): ");
         String tipo = sc.nextLine();
-
-        mostrarLista(userService.listarPorTipo(tipo));
+        List<Utilizador> lista = userService.listarPorTipo(tipo);
+        mostrarLista(lista);
+        logger.info("Listagem filtrada por tipo '{}' exibida. Total: {}", tipo, lista.size());
     }
 
     private void procurarNome() {
         System.out.print("Nome a procurar: ");
         String nome = sc.nextLine();
-
-        mostrarLista(userService.buscarPorNome(nome));
+        List<Utilizador> lista = userService.buscarPorNome(nome);
+        mostrarLista(lista);
+        logger.info("Pesquisa por nome '{}' realizada. Resultados: {}", nome, lista.size());
     }
 
     private void listarPaginado() {
@@ -98,7 +105,9 @@ public class MenuGestaoUtilizadores {
         System.out.print("Tamanho da página: ");
         int tamanho = Integer.parseInt(sc.nextLine());
 
-        mostrarLista(userService.listarPaginado(pg, tamanho));
+        List<Utilizador> lista = userService.listarPaginado(pg, tamanho);
+        mostrarLista(lista);
+        logger.info("Listagem paginada exibida. Página: {}, Tamanho: {}, Registos exibidos: {}", pg, tamanho, lista.size());
     }
 
     private void mostrarLista(List<Utilizador> lista) {
@@ -106,6 +115,7 @@ public class MenuGestaoUtilizadores {
 
         if (lista.isEmpty()) {
             System.out.println("Nenhum utilizador encontrado.");
+            logger.info("Lista vazia exibida.");
             return;
         }
 
@@ -129,6 +139,7 @@ public class MenuGestaoUtilizadores {
         System.out.print("Password: ");
         String pass = sc.nextLine();
         String hash = PasswordUtils.hash(pass);
+        logger.debug("Password digitada: {}, Hash gerado: {}", pass, hash);
 
         System.out.print("Nome: ");
         String nome = sc.nextLine();
@@ -167,6 +178,7 @@ public class MenuGestaoUtilizadores {
         );
 
         userService.addUser(novo);
+        logger.info("Novo utilizador criado: {} ({})", username, tipo);
     }
 
     private void alterar() {
@@ -179,6 +191,7 @@ public class MenuGestaoUtilizadores {
 
         if (atual == null) {
             System.out.println("Utilizador não encontrado.");
+            logger.warn("Tentativa de alterar utilizador inexistente: {}", uname);
             return;
         }
 
@@ -222,6 +235,7 @@ public class MenuGestaoUtilizadores {
 
         userService.updateUser(uname, atual);
         System.out.println("Utilizador atualizado.");
+        logger.info("Utilizador atualizado: {}", uname);
     }
 
     private void remover() {
@@ -232,5 +246,6 @@ public class MenuGestaoUtilizadores {
 
         userService.removeUser(uname);
         System.out.println("Removido com sucesso.");
+        logger.info("Utilizador removido: {}", uname);
     }
 }
