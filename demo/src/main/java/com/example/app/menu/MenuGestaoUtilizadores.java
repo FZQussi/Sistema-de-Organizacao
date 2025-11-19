@@ -2,6 +2,7 @@ package com.example.app.menu;
 
 import com.example.model.Utilizador;
 import com.example.service.UserService;
+import com.example.utils.FileUtils;
 import com.example.utils.PasswordUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -132,7 +133,6 @@ public class MenuGestaoUtilizadores {
     // -------------------
     // CRIAR / ALTERAR / REMOVER
     // -------------------
-
 private void criar() {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     String dataNascimento;
@@ -154,10 +154,21 @@ private void criar() {
     System.out.print("Descrição: ");
     String descricao = sc.nextLine();
 
-    System.out.print("Nacionalidade: ");
-    String nacionalidade = sc.nextLine();
+    // --- Nacionalidade com validação ---
+    List<String> nacionalidadesValidas = FileUtils.carregarNacionalidades();
+    String nacionalidade;
+    while (true) {
+        System.out.print("Nacionalidade: ");
+        nacionalidade = sc.nextLine();
+        if (nacionalidadesValidas.contains(nacionalidade)) {
+            break;
+        } else {
+            System.out.println("Nacionalidade inválida. Valores válidos: " + nacionalidadesValidas);
+            logger.warn("Nacionalidade inválida digitada: {}", nacionalidade);
+        }
+    }
 
-    // Validação da data de nascimento
+    // --- Data de nascimento com validação ---
     while (true) {
         System.out.print("Data de nascimento (AAAA-MM-DD): ");
         dataNascimento = sc.nextLine();
@@ -223,11 +234,21 @@ private void alterar() {
     String desc = sc.nextLine();
     if (!desc.isEmpty()) atual.setDescricao(desc);
 
+    // --- Nacionalidade com validação ---
+    List<String> nacionalidadesValidas = FileUtils.carregarNacionalidades();
     System.out.print("Nova nacionalidade (" + atual.getNacionalidade() + "): ");
     String nac = sc.nextLine();
-    if (!nac.isEmpty()) atual.setNacionalidade(nac);
+    if (!nac.isEmpty()) {
+        while (!nacionalidadesValidas.contains(nac)) {
+            System.out.println("Nacionalidade inválida. Valores válidos: " + nacionalidadesValidas);
+            logger.warn("Nacionalidade inválida digitada: {}", nac);
+            System.out.print("Nova nacionalidade (" + atual.getNacionalidade() + "): ");
+            nac = sc.nextLine();
+        }
+        atual.setNacionalidade(nac);
+    }
 
-    // Validação da data de nascimento
+    // --- Data de nascimento com validação ---
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     System.out.print("Nova data (" + atual.getDataNascimento() + "): ");
     String dataInput = sc.nextLine();
@@ -267,6 +288,7 @@ private void alterar() {
     System.out.println("Utilizador atualizado.");
     logger.info("Utilizador atualizado: {}", uname);
 }
+
 
     private void remover() {
         listarOrdenado();

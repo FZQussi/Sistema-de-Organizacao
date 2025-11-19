@@ -40,3 +40,39 @@ java.lang.NumberFormatException: For input string: "user"
 	at com.example.app.menu.MenuPrincipal.iniciar(MenuPrincipal.java:55) ~[classes/:?]
 	at com.example.app.Main.main(Main.java:26) [classes/:?]
 2025-11-19 12:06:18 [main] INFO : Aplicação encerrada.
+2025-11-19 12:29:16 [main] INFO : Ficheiro nacionalidades.json criado em: C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\nacionalidades.json
+2025-11-19 12:29:16 [main] INFO : Nacionalidades padrão gravadas em nacionalidades.json
+2025-11-19 12:29:16 [main] INFO : Estrutura de ficheiros inicializada com sucesso.
+2025-11-19 12:29:16 [main] INFO : Iniciando a aplicação Sistema de Gestão.
+2025-11-19 12:29:16 [main] INFO : Carregados 4 utilizadores do ficheiro 'C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\users.json'.
+2025-11-19 12:29:16 [main] INFO : Gestão de estacionamento inicializada com capacidade: 10
+2025-11-19 12:29:43 [main] INFO : Login bem-sucedido: admin (gerente)
+2025-11-19 12:29:43 [main] INFO : Login bem-sucedido: admin (gerente)
+2025-11-19 12:29:44 [main] INFO : Logout efetuado: admin (gerente)
+2025-11-19 12:29:44 [main] INFO : Usuário 'admin' efetuou logout.
+2025-11-19 12:29:44 [main] INFO : Aplicação encerrada.
+2025-11-19 12:32:51 [main] INFO : Estrutura de ficheiros inicializada com sucesso.
+2025-11-19 12:32:51 [main] INFO : Iniciando a aplicação Sistema de Gestão.
+2025-11-19 12:32:51 [main] INFO : Carregados 4 utilizadores do ficheiro 'C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\users.json'.
+2025-11-19 12:32:51 [main] INFO : Gestão de estacionamento inicializada com capacidade: 10
+2025-11-19 12:32:54 [main] INFO : Login bem-sucedido: admin (gerente)
+2025-11-19 12:32:54 [main] INFO : Login bem-sucedido: admin (gerente)
+2025-11-19 12:33:02 [main] INFO : Gerente 'admin' entrou no menu de gestão de utilizadores.
+2025-11-19 12:33:07 [main] INFO : Listagem de utilizadores ordenada exibida. Total: 4
+2025-11-19 12:33:10 [main] WARN : Tentativa de alterar utilizador inexistente: 
+2025-11-19 12:33:36 [main] WARN : Nacionalidade inválida digitada: italia
+2025-11-19 12:33:51 [main] WARN : Data de nascimento inválida digitada: 2000-13-02
+2025-11-19 12:34:22 [main] INFO : Lista de utilizadores gravada com sucesso no ficheiro 'C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\users.json'.
+2025-11-19 12:34:22 [main] INFO : Novo utilizador adicionado: user3 (operador)
+2025-11-19 12:34:22 [main] INFO : Novo utilizador criado: user3 (operador)
+2025-11-19 12:34:27 [main] INFO : Listagem de utilizadores ordenada exibida. Total: 5
+2025-11-19 12:34:31 [main] INFO : Voltando ao menu de gestão de utilizadores.
+2025-11-19 12:34:31 [main] ERROR: Ocorreu um erro inesperado na aplicação.
+java.lang.NumberFormatException: For input string: ""
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:67) ~[?:?]
+	at java.lang.Integer.parseInt(Integer.java:678) ~[?:?]
+	at java.lang.Integer.parseInt(Integer.java:786) ~[?:?]
+	at com.example.app.menu.MenuGestaoUtilizadores.mostrar(MenuGestaoUtilizadores.java:39) ~[classes/:?]
+	at com.example.app.menu.MenuPrincipal.iniciar(MenuPrincipal.java:55) ~[classes/:?]
+	at com.example.app.Main.main(Main.java:26) [classes/:?]
+2025-11-19 12:34:31 [main] INFO : Aplicação encerrada.
