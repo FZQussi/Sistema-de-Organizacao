@@ -1,7 +1,8 @@
-package com.example.app.menu;
+package com.example.app.menu.utilizadores;
 
 import com.example.model.Utilizador;
 import com.example.service.UserService;
+import com.example.utils.ConsoleUtils;
 import com.example.utils.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,6 +25,8 @@ public class MenuAlterarUtilizador {
     }
 
     public void mostrar() {
+        // Limpar consola ao entrar no menu
+        ConsoleUtils.clear();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -45,7 +48,6 @@ public class MenuAlterarUtilizador {
         // =========================
         // Campos para alteração
         // =========================
-
         System.out.print("Nome (" + atual.getNome() + "): ");
         String nome = sc.nextLine();
         if (!nome.isEmpty()) atual.setNome(nome);

@@ -1,4 +1,4 @@
-package com.example.app.menu;
+package com.example.app.menu.utilizadores;
 
 import com.example.service.UserService;
 import org.apache.logging.log4j.LogManager;

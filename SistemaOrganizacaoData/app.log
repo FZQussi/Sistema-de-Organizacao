@@ -76,3 +76,32 @@ java.lang.NumberFormatException: For input string: ""
 	at com.example.app.menu.MenuPrincipal.iniciar(MenuPrincipal.java:55) ~[classes/:?]
 	at com.example.app.Main.main(Main.java:26) [classes/:?]
 2025-11-19 12:34:31 [main] INFO : Aplicação encerrada.
+2025-11-20 12:30:12 [main] INFO : Estrutura de ficheiros inicializada com sucesso.
+2025-11-20 12:30:12 [main] INFO : Iniciando a aplicação Sistema de Gestão.
+2025-11-20 12:30:12 [main] INFO : Carregados 5 utilizadores do ficheiro 'C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\users.json'.
+2025-11-20 12:30:12 [main] INFO : Gestão de estacionamento inicializada com capacidade: 10
+2025-11-20 12:30:18 [main] INFO : Login bem-sucedido: admin (gerente)
+2025-11-20 12:30:18 [main] INFO : Login bem-sucedido: admin (gerente)
+2025-11-20 12:30:24 [main] INFO : Gerente 'admin' entrou no menu de gestão de utilizadores.
+2025-11-20 12:30:32 [main] ERROR: Ocorreu um erro inesperado na aplicação.
+java.util.NoSuchElementException: No line found
+	at java.util.Scanner.nextLine(Scanner.java:1651) ~[?:?]
+	at com.example.app.menu.MenuCriarUtilizador.mostrar(MenuCriarUtilizador.java:38) ~[classes/:?]
+	at com.example.app.menu.MenuGestaoUtilizadores.mostrar(MenuGestaoUtilizadores.java:35) ~[classes/:?]
+	at com.example.app.menu.MenuPrincipal.iniciar(MenuPrincipal.java:55) ~[classes/:?]
+	at com.example.app.Main.main(Main.java:26) [classes/:?]
+2025-11-20 12:43:29 [main] INFO : Estrutura de ficheiros inicializada com sucesso.
+2025-11-20 12:43:29 [main] INFO : Iniciando a aplicação Sistema de Gestão.
+2025-11-20 12:43:29 [main] INFO : Carregados 5 utilizadores do ficheiro 'C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\users.json'.
+2025-11-20 12:43:29 [main] INFO : Gestão de estacionamento inicializada com capacidade: 10
+2025-11-20 12:43:35 [main] INFO : Login bem-sucedido: admin (gerente)
+2025-11-20 12:43:35 [main] INFO : Login efetuado: admin
+2025-11-20 12:43:37 [main] INFO : Gerente 'admin' acedeu à gestão de utilizadores.
+2025-11-20 12:43:43 [main] ERROR: Ocorreu um erro inesperado na aplicação.
+java.util.NoSuchElementException: No line found
+	at java.util.Scanner.nextLine(Scanner.java:1651) ~[?:?]
+	at com.example.app.menu.utilizadores.MenuCriarUtilizador.mostrar(MenuCriarUtilizador.java:35) ~[classes/:?]
+	at com.example.app.menu.utilizadores.MenuGestaoUtilizadores.mostrar(MenuGestaoUtilizadores.java:35) ~[classes/:?]
+	at com.example.app.menu.MenuPrincipal.handleGerente(MenuPrincipal.java:85) ~[classes/:?]
+	at com.example.app.menu.MenuPrincipal.iniciar(MenuPrincipal.java:60) ~[classes/:?]
+	at com.example.app.Main.main(Main.java:26) [classes/:?]

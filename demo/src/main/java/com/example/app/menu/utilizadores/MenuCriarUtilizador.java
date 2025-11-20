@@ -1,4 +1,4 @@
-package com.example.app.menu;
+package com.example.app.menu.utilizadores;
 
 import com.example.model.Utilizador;
 import com.example.service.UserService;
