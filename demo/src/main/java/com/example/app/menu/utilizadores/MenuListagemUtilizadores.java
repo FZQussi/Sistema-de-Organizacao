@@ -2,8 +2,10 @@ package com.example.app.menu.utilizadores;
 
 import com.example.model.Utilizador;
 import com.example.service.UserService;
+import com.example.utils.ConsoleUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,6 +24,9 @@ public class MenuListagemUtilizadores {
         int opcao;
 
         do {
+            // Limpar consola a cada abertura do menu
+            ConsoleUtils.clear();
+
             System.out.println("\n==== Listagem de Utilizadores ====");
             System.out.println("1 - Listar todos (ordenado)");
             System.out.println("2 - Filtrar por tipo");
@@ -30,7 +35,13 @@ public class MenuListagemUtilizadores {
             System.out.println("0 - Voltar");
             System.out.print("Escolha: ");
 
-            opcao = Integer.parseInt(sc.nextLine());
+            try {
+                opcao = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("❌ Opção inválida! Digite um número.");
+                logger.warn("Entrada inválida no menu de listagem de utilizadores.", e);
+                opcao = -1;
+            }
 
             switch (opcao) {
                 case 1 -> listarOrdenado();
@@ -38,8 +49,16 @@ public class MenuListagemUtilizadores {
                 case 3 -> procurarNome();
                 case 4 -> listarPaginado();
                 case 0 -> logger.info("Voltando ao menu anterior.");
-                default -> logger.warn("Opção inválida: {}", opcao);
+                default -> {
+                    if (opcao != 0) {
+                        System.out.println("❌ Opção inválida. Tente novamente.");
+                        logger.warn("Opção inválida: {}", opcao);
+                    }
+                }
             }
+
+            System.out.println("\nPressione ENTER para continuar...");
+            sc.nextLine(); // Pausa antes de limpar e voltar ao menu
 
         } while (opcao != 0);
     }
@@ -61,13 +80,18 @@ public class MenuListagemUtilizadores {
     }
 
     private void listarPaginado() {
-        System.out.print("Página: ");
-        int pg = Integer.parseInt(sc.nextLine());
+        try {
+            System.out.print("Página: ");
+            int pg = Integer.parseInt(sc.nextLine());
 
-        System.out.print("Tamanho: ");
-        int tam = Integer.parseInt(sc.nextLine());
+            System.out.print("Tamanho: ");
+            int tam = Integer.parseInt(sc.nextLine());
 
-        mostrarLista(userService.listarPaginado(pg, tam));
+            mostrarLista(userService.listarPaginado(pg, tam));
+        } catch (NumberFormatException e) {
+            System.out.println("❌ Entrada inválida! Digite números válidos.");
+            logger.warn("Entrada inválida na listagem paginada.", e);
+        }
     }
 
     private void mostrarLista(List<Utilizador> lista) {

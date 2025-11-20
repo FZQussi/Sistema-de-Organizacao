@@ -1,8 +1,10 @@
 package com.example.app.menu.utilizadores;
 
 import com.example.service.UserService;
+import com.example.utils.ConsoleUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.util.Scanner;
 
 public class MenuGestaoUtilizadores {
@@ -20,6 +22,9 @@ public class MenuGestaoUtilizadores {
         int opcao;
 
         do {
+            // Limpar a consola a cada exibição do menu
+            ConsoleUtils.clear();
+
             System.out.println("\n==== Gestão de Utilizadores ====");
             System.out.println("1 - Listar / Procurar utilizadores");
             System.out.println("2 - Criar utilizador");
@@ -28,7 +33,13 @@ public class MenuGestaoUtilizadores {
             System.out.println("0 - Voltar");
             System.out.print("Escolha: ");
 
-            opcao = Integer.parseInt(sc.nextLine());
+            try {
+                opcao = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("❌ Opção inválida! Digite um número.");
+                logger.warn("Entrada inválida no menu de gestão de utilizadores.", e);
+                opcao = -1;
+            }
 
             switch (opcao) {
                 case 1 -> new MenuListagemUtilizadores(userService).mostrar();
@@ -36,9 +47,15 @@ public class MenuGestaoUtilizadores {
                 case 3 -> new MenuAlterarUtilizador(userService).mostrar();
                 case 4 -> new MenuRemoverUtilizador(userService).mostrar();
                 case 0 -> logger.info("Voltando ao menu anterior.");
-                default -> logger.warn("Opção inválida: {}", opcao);
+                default -> {
+                    if (opcao != 0) {
+                        System.out.println("❌ Opção inválida. Tente novamente.");
+                        logger.warn("Opção inválida: {}", opcao);
+                    }
+                }
             }
 
         } while (opcao != 0);
     }
 }
+

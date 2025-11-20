@@ -1,7 +1,8 @@
 package com.example.app.menu.utilizadores;
 
-import com.example.service.UserService;
 import com.example.model.Utilizador;
+import com.example.service.UserService;
+import com.example.utils.ConsoleUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,10 +21,18 @@ public class MenuRemoverUtilizador {
 
     public void mostrar() {
 
+        // Limpar consola ao entrar no menu
+        ConsoleUtils.clear();
         System.out.println("\n=== Remover Utilizador ===");
+        System.out.println("Digite '0' para cancelar e voltar ao menu anterior.\n");
 
         System.out.print("Username do utilizador a remover: ");
         String username = sc.nextLine();
+
+        if (username.equals("0")) {
+            System.out.println("Ação cancelada. Voltando ao menu anterior.");
+            return;
+        }
 
         Utilizador u = userService.getByUsername(username);
 
@@ -37,7 +46,7 @@ public class MenuRemoverUtilizador {
         System.out.println(" - Nome: " + u.getNome() + " " + u.getSobrenome());
         System.out.println(" - Tipo: " + u.getTipo());
 
-        System.out.print("\nTem a certeza que deseja remover? (s/n): ");
+        System.out.print("\nTem a certeza que deseja remover? (s/n ou 0 para cancelar): ");
         String confirm = sc.nextLine().toLowerCase();
 
         if (!confirm.equals("s")) {
