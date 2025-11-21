@@ -80,3 +80,6 @@ public class AuthService {
         return loggedUser != null && "operador".equalsIgnoreCase(loggedUser.getTipo());
     }
 }
+
+
+Adicionar sistemaa de Turnoos
