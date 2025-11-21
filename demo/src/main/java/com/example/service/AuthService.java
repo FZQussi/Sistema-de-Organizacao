@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 public class AuthService {
 
     private static final Logger logger = LogManager.getLogger(AuthService.class);
+    private final TurnoService turnoService = new TurnoService();
 
     private final UserService userService;
     private Utilizador loggedUser;
@@ -20,37 +21,46 @@ public class AuthService {
      * Tenta autenticar o utilizador com username e password.
      * Retorna o Utilizador logado ou null se falhar.
      */
-    public Utilizador login(String username, String password) {
+   public Utilizador login(String username, String password) {
 
-        Utilizador user = userService.getByUsername(username);
+    Utilizador user = userService.getByUsername(username);
 
-        if (user == null) {
-            logger.warn("Tentativa de login falhada: utilizador '{}' não encontrado.", username);
-            return null; // Utilizador não existe
-        }
-
-        // Verificação segura com bcrypt
-        if (!PasswordUtils.verify(password, user.getPassword())) {
-            logger.warn("Tentativa de login falhada: password incorreta para utilizador '{}'.", username);
-            return null; // Password incorreta
-        }
-
-        this.loggedUser = user;
-        logger.info("Login bem-sucedido: {} ({})", username, user.getTipo());
-        return loggedUser;
+    if (user == null) {
+        logger.warn("Tentativa de login falhada: utilizador '{}' não encontrado.", username);
+        return null;
     }
+
+    if (!PasswordUtils.verify(password, user.getPassword())) {
+        logger.warn("Tentativa de login falhada: password incorreta para '{}'.", username);
+        return null;
+    }
+
+    this.loggedUser = user;
+
+    // REGISTAR ENTRADA DE TURNO
+    turnoService.registarEntrada(user);
+
+    logger.info("Login bem-sucedido: {} ({})", username, user.getTipo());
+    return loggedUser;
+}
+
 
     /**
      * Termina sessão do utilizador atual.
      */
-    public void logout() {
-        if (loggedUser != null) {
-            logger.info("Logout efetuado: {} ({})", loggedUser.getUsername(), loggedUser.getTipo());
-            this.loggedUser = null;
-        } else {
-            logger.warn("Tentativa de logout quando nenhum utilizador está logado.");
-        }
+  public void logout() {
+    if (loggedUser != null) {
+
+        // REGISTAR SAÍDA DE TURNO
+        turnoService.registarSaida(loggedUser);
+
+        logger.info("Logout efetuado: {} ({})", loggedUser.getUsername(), loggedUser.getTipo());
+        this.loggedUser = null;
+    } else {
+        logger.warn("Tentativa de logout quando nenhum utilizador está logado.");
     }
+}
+
 
     /**
      * Retorna o utilizador atualmente logado.
@@ -80,3 +90,5 @@ public class AuthService {
         return loggedUser != null && "operador".equalsIgnoreCase(loggedUser.getTipo());
     }
 }
+
+
