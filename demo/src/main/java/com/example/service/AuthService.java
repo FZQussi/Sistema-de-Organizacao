@@ -21,7 +21,7 @@ public class AuthService {
      * Tenta autenticar o utilizador com username e password.
      * Retorna o Utilizador logado ou null se falhar.
      */
-   public Utilizador login(String username, String password) {
+public Utilizador login(String username, String password) {
 
     Utilizador user = userService.getByUsername(username);
 
@@ -37,29 +37,38 @@ public class AuthService {
 
     this.loggedUser = user;
 
-    // REGISTAR ENTRADA DE TURNO
-    turnoService.registarEntrada(user);
+    // REGISTAR ENTRADA APENAS SE FOR OPERADOR
+    if ("operador".equalsIgnoreCase(user.getTipo())) {
+        turnoService.registarEntrada(user);
+        logger.info("Entrada de turno registada para operador '{}'.", username);
+    }
 
     logger.info("Login bem-sucedido: {} ({})", username, user.getTipo());
     return loggedUser;
 }
 
 
+
     /**
      * Termina sessão do utilizador atual.
      */
-  public void logout() {
+public void logout() {
     if (loggedUser != null) {
 
-        // REGISTAR SAÍDA DE TURNO
-        turnoService.registarSaida(loggedUser);
+        // REGISTAR SAÍDA APENAS SE FOR OPERADOR
+        if ("operador".equalsIgnoreCase(loggedUser.getTipo())) {
+            turnoService.registarSaida(loggedUser);
+            logger.info("Saída de turno registada para operador '{}'.", loggedUser.getUsername());
+        }
 
         logger.info("Logout efetuado: {} ({})", loggedUser.getUsername(), loggedUser.getTipo());
         this.loggedUser = null;
+
     } else {
         logger.warn("Tentativa de logout quando nenhum utilizador está logado.");
     }
 }
+
 
 
     /**
