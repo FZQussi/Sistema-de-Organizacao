@@ -136,6 +136,7 @@ java.util.NoSuchElementException: No line found
 2025-11-21 13:39:26 [main] INFO : Saída de turno registada para operador 'user3'.
 2025-11-21 13:39:26 [main] INFO : Logout efetuado: user3 (operador)
 2025-11-21 13:39:26 [main] INFO : Usuário 'user3' fez logout.
+<<<<<<< HEAD
 2025-11-21 14:05:40 [main] INFO : Estrutura de ficheiros inicializada com sucesso.
 2025-11-21 14:05:40 [main] INFO : Iniciando a aplicação Sistema de Gestão.
 2025-11-21 14:05:40 [main] INFO : Carregados 5 utilizadores do ficheiro 'C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\users.json'.
@@ -148,3 +149,5 @@ java.util.NoSuchElementException: No line found
 2025-11-21 14:05:47 [main] INFO : Saída de turno registada para operador 'user3'.
 2025-11-21 14:05:47 [main] INFO : Logout efetuado: user3 (operador)
 2025-11-21 14:05:47 [main] INFO : Usuário 'user3' fez logout.
+=======
+>>>>>>> b3d442bc0713074605841d1a7e0f55dbe4b6f685
