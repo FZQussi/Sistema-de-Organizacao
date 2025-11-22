@@ -8,3 +8,13 @@
  - Diferença saída:  -380 minutos
  - Total trabalhado: 0h 0min
 -----------------------------------------
+
+[2025-11-21] user3 (operador)
+ - Entrada prevista: 08:10
+ - Entrada real:     14:05:44.993938700
+ - Atraso:           355 minutos
+ - Saída prevista:   20:00
+ - Saída real:       14:05:47.491175600
+ - Diferença saída:  -354 minutos
+ - Total trabalhado: 0h 0min
+-----------------------------------------
