@@ -2,142 +2,133 @@ package com.example.service;
 
 import com.example.model.Utilizador;
 import com.example.utils.FileUtils;
-
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.YearMonth;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PaymentService {
 
     private static final Logger logger = LogManager.getLogger(PaymentService.class);
 
     public void calcularPagamentoMensal(Utilizador u, int ano, int mes) {
-
-        long minutosTrabalhados = calcularMinutosTrabalhados(u.getUsername(), ano, mes);
-        long minutosAtraso = calcularAtrasos(u.getUsername(), ano, mes);
+        logger.info("=== Início cálculo pagamento para {} em {}/{} ===", u.getUsername(), mes, ano);
 
         double salarioHora = u.getSalario();
-        double horasTrabalhadas = minutosTrabalhados / 60.0;
-        double desconto = (minutosAtraso / 60.0) * salarioHora;
+        long totalMinutos = calcularMinutosTrabalhados(u.getUsername(), ano, mes);
+        long minutosAtraso = calcularAtrasos(u.getUsername(), ano, mes);
+
+        double horasTrabalhadas = totalMinutos / 60.0;
+        double horasAtraso = minutosAtraso / 60.0;
 
         double pagamentoBruto = horasTrabalhadas * salarioHora;
-        double pagamentoFinal = pagamentoBruto - desconto;
+        double descontoAtrasos = horasAtraso * salarioHora;
+        double pagamentoFinal = pagamentoBruto - descontoAtrasos;
 
-        gravarPagamento(u.getUsername(), ano, mes, pagamentoFinal);
+        gravarPagamento(u.getUsername(), ano, mes, pagamentoBruto, descontoAtrasos, pagamentoFinal);
 
+        // --- OUTPUT NA CONSOLA ---
         System.out.println("\n=== Pagamento Mensal ===");
-        System.out.println("Utilizador: " + u.getUsername());
+        System.out.println("Utilizador:       " + u.getUsername());
         System.out.println("Horas trabalhadas: " + horasTrabalhadas);
-        System.out.println("Minutos atraso: " + minutosAtraso);
-        System.out.println("Salário/hora: " + salarioHora);
-        System.out.println("Pagamento final: " + pagamentoFinal + "€");
+        System.out.println("Horas de atraso:   " + horasAtraso);
+        System.out.println("Salário por hora:  " + salarioHora);
+        System.out.println("-------------------------------");
+        System.out.println("Bruto:             " + pagamentoBruto + "€");
+        System.out.println("Desconto atrasos:  -" + descontoAtrasos + "€");
+        System.out.println("TOTAL A PAGAR:     " + pagamentoFinal + "€");
+
+        logger.info("Pagamento calculado: Bruto={}€, Desconto={}€, Total={}€",
+                pagamentoBruto, descontoAtrasos, pagamentoFinal);
     }
 
-
-    // ----------------------------------------------------
-    //          PROCESSAMENTO DE TURNOS POR BLOCOS
-    // ----------------------------------------------------
-
-    private List<List<String>> lerBlocosTurnos() throws IOException {
-        List<String> linhas = Files.readAllLines(FileUtils.getTurnosFile().toPath());
-        List<List<String>> blocos = new ArrayList<>();
-
-        List<String> atual = new ArrayList<>();
-        for (String linha : linhas) {
-            if (linha.startsWith("[") && linha.contains("]")) {
-                if (!atual.isEmpty()) {
-                    blocos.add(new ArrayList<>(atual));
-                    atual.clear();
-                }
-            }
-            atual.add(linha);
-
-            if (linha.contains("-----------------------------------------")) {
-                blocos.add(new ArrayList<>(atual));
-                atual.clear();
-            }
-        }
-
-        return blocos;
-    }
-
+    // -------------------------------
+    //       CALCULAR MINUTOS TRABALHADOS
+    // -------------------------------
     private long calcularMinutosTrabalhados(String username, int ano, int mes) {
         try {
-            List<List<String>> blocos = lerBlocosTurnos();
+            List<String> linhas = Files.readAllLines(FileUtils.getTurnosFile().toPath());
             long total = 0;
+            boolean blocoDoUser = false;
 
-            for (List<String> bloco : blocos) {
+            for (String linha : linhas) {
+                // Detecta início de bloco do utilizador para o mês/ano correto
+                if (linha.startsWith("[")) {
+                    blocoDoUser = linha.contains(username)
+                            && linha.startsWith("[" + ano + "-" + String.format("%02d", mes));
+                }
 
-                if (!bloco.get(0).contains(username)) continue;
-
-                // Extrair data do bloco
-                String header = bloco.get(0);
-                String dataStr = header.substring(header.indexOf("[") + 1, header.indexOf("]"));
-                LocalDate data = LocalDate.parse(dataStr);
-
-                if (data.getYear() != ano || data.getMonthValue() != mes) continue;
-
-                for (String linha : bloco) {
-                    if (linha.contains("Total trabalhado")) {
-                        String tempo = linha.split(":")[1].trim(); // "0h 10min"
-                        String[] partes = tempo.split("[hmin ]+"); // divide por letras
-
-                        long horas = Long.parseLong(partes[0]);
-                        long minutos = Long.parseLong(partes[1]);
-
-                        total += horas * 60 + minutos;
+                if (blocoDoUser && linha.contains("Total trabalhado:")) {
+                    String temp = linha.replace("Total trabalhado:", "").trim(); // ex: "-  0h 0min"
+                    Pattern p = Pattern.compile("(\\d+)h\\s*(\\d+)min");
+                    Matcher m = p.matcher(temp);
+                    if (m.find()) {
+                        long horas = Long.parseLong(m.group(1));
+                        long mins = Long.parseLong(m.group(2));
+                        total += horas * 60 + mins;
+                        logger.debug("Adicionando {}h {}min => total minutos: {}", horas, mins, total);
+                    } else {
+                        logger.warn("Não foi possível extrair horas/minutos de '{}'", temp);
                     }
                 }
             }
-
             return total;
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             logger.error("Erro ao calcular minutos trabalhados", e);
             return 0;
         }
     }
 
+    // -------------------------------
+    //       CALCULAR ATRASOS
+    // -------------------------------
     private long calcularAtrasos(String username, int ano, int mes) {
         try {
-            List<List<String>> blocos = lerBlocosTurnos();
+            List<String> linhas = Files.readAllLines(FileUtils.getTurnosFile().toPath());
             long total = 0;
+            boolean blocoDoUser = false;
 
-            for (List<String> bloco : blocos) {
+            for (String linha : linhas) {
+                if (linha.startsWith("[")) {
+                    blocoDoUser = linha.contains(username)
+                            && linha.startsWith("[" + ano + "-" + String.format("%02d", mes));
+                }
 
-                if (!bloco.get(0).contains(username)) continue;
-
-                String header = bloco.get(0);
-                String dataStr = header.substring(header.indexOf("[") + 1, header.indexOf("]"));
-                LocalDate data = LocalDate.parse(dataStr);
-
-                if (data.getYear() != ano || data.getMonthValue() != mes) continue;
-
-                for (String linha : bloco) {
-                    if (linha.contains("Atraso:")) {
-                        String min = linha.split(":")[2].replace("minutos", "").trim();
-                        total += Long.parseLong(min);
+                if (blocoDoUser && linha.contains("Atraso")) {
+                    // Extrai apenas números da linha
+                    Pattern p = Pattern.compile("(\\d+)");
+                    Matcher m = p.matcher(linha);
+                    if (m.find()) {
+                        long atraso = Long.parseLong(m.group(1));
+                        total += atraso;
+                        logger.debug("Atraso encontrado: {} min => total: {}", atraso, total);
                     }
                 }
             }
-
             return total;
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             logger.error("Erro ao calcular atrasos", e);
             return 0;
         }
     }
 
-    private void gravarPagamento(String username, int ano, int mes, double valor) {
+    // -------------------------------
+    //       GUARDAR NO FICHEIRO
+    // -------------------------------
+    private void gravarPagamento(String username, int ano, int mes,
+                                 double bruto, double desconto, double finalP) {
         try (FileWriter fw = new FileWriter(FileUtils.getPagamentosFile(), true)) {
-            fw.write("[" + ano + "-" + mes + "] " + username + " -> " + valor + "€\n");
+            fw.write(String.format("[%04d-%02d] %s | Bruto: %.2f€ | Desconto: -%.2f€ | Final: %.2f€\n",
+                    ano, mes, username, bruto, desconto, finalP));
+            logger.info("Pagamento gravado no ficheiro para {}: Final={}€", username, finalP);
         } catch (IOException e) {
             logger.error("Erro ao gravar pagamento", e);
         }

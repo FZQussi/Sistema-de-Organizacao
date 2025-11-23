@@ -1,2 +1,6 @@
 [2025-11] user3 -> 0.0€
 [2025-11] user3 -> 0.0€
+[2025-11] user3 | Bruto: 0.0€ | Desconto: -0.0€ | Final: 0.0€
+[2025-11] user3 | Bruto: 162.20€ | Desconto: -15.25€ | Final: 146.95€
+[2025-11] user3 | Bruto: 162.20€ | Desconto: -15.25€ | Final: 146.95€
+[2025-11] user3 | Bruto: 162.20€ | Desconto: -15.25€ | Final: 146.95€

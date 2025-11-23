@@ -180,3 +180,113 @@ java.lang.ArrayIndexOutOfBoundsException: Index 2 out of bounds for length 2
 2025-11-23 11:37:22 [main] INFO : Voltando ao menu anterior.
 2025-11-23 11:37:22 [main] INFO : Logout efetuado: admin (gerente)
 2025-11-23 11:37:22 [main] INFO : Usuário 'admin' fez logout.
+2025-11-23 11:38:35 [main] INFO : Estrutura de ficheiros inicializada com sucesso.
+2025-11-23 11:38:35 [main] INFO : Iniciando a aplicação Sistema de Gestão.
+2025-11-23 11:38:35 [main] INFO : Carregados 5 utilizadores do ficheiro 'C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\users.json'.
+2025-11-23 11:38:35 [main] INFO : Gestão de estacionamento inicializada com capacidade: 10
+2025-11-23 11:38:40 [main] INFO : Login bem-sucedido: admin (gerente)
+2025-11-23 11:38:40 [main] INFO : Login efetuado: admin
+2025-11-23 11:38:42 [main] INFO : Gerente 'admin' acedeu à gestão de utilizadores.
+2025-11-23 11:41:51 [main] WARN : Entrada inválida no menu de gestão de utilizadores.
+java.lang.NumberFormatException: For input string: "o"
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:67) ~[?:?]
+	at java.lang.Integer.parseInt(Integer.java:668) ~[?:?]
+	at java.lang.Integer.parseInt(Integer.java:786) ~[?:?]
+	at com.example.app.menu.utilizadores.MenuGestaoUtilizadores.mostrar(MenuGestaoUtilizadores.java:38) [classes/:?]
+	at com.example.app.menu.MenuPrincipal.handleGerente(MenuPrincipal.java:85) [classes/:?]
+	at com.example.app.menu.MenuPrincipal.iniciar(MenuPrincipal.java:60) [classes/:?]
+	at com.example.app.Main.main(Main.java:26) [classes/:?]
+2025-11-23 11:41:51 [main] WARN : Opção inválida: -1
+2025-11-23 11:41:52 [main] WARN : Entrada inválida no menu de gestão de utilizadores.
+java.lang.NumberFormatException: For input string: "o"
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:67) ~[?:?]
+	at java.lang.Integer.parseInt(Integer.java:668) ~[?:?]
+	at java.lang.Integer.parseInt(Integer.java:786) ~[?:?]
+	at com.example.app.menu.utilizadores.MenuGestaoUtilizadores.mostrar(MenuGestaoUtilizadores.java:38) [classes/:?]
+	at com.example.app.menu.MenuPrincipal.handleGerente(MenuPrincipal.java:85) [classes/:?]
+	at com.example.app.menu.MenuPrincipal.iniciar(MenuPrincipal.java:60) [classes/:?]
+	at com.example.app.Main.main(Main.java:26) [classes/:?]
+2025-11-23 11:41:52 [main] WARN : Opção inválida: -1
+2025-11-23 11:41:52 [main] INFO : Voltando ao menu anterior.
+2025-11-23 11:41:52 [main] INFO : Logout efetuado: admin (gerente)
+2025-11-23 11:41:52 [main] INFO : Usuário 'admin' fez logout.
+2025-11-23 11:41:56 [main] INFO : Estrutura de ficheiros inicializada com sucesso.
+2025-11-23 11:41:56 [main] INFO : Iniciando a aplicação Sistema de Gestão.
+2025-11-23 11:41:56 [main] INFO : Carregados 5 utilizadores do ficheiro 'C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\users.json'.
+2025-11-23 11:41:56 [main] INFO : Gestão de estacionamento inicializada com capacidade: 10
+2025-11-23 11:42:02 [main] INFO : Login bem-sucedido: admin (gerente)
+2025-11-23 11:42:02 [main] INFO : Login efetuado: admin
+2025-11-23 11:42:03 [main] INFO : Gerente 'admin' acedeu à gestão de utilizadores.
+2025-11-23 11:42:13 [main] ERROR: Ocorreu um erro inesperado na aplicação.
+java.lang.NumberFormatException: For input string: "-  0"
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:67) ~[?:?]
+	at java.lang.Long.parseLong(Long.java:711) ~[?:?]
+	at java.lang.Long.parseLong(Long.java:836) ~[?:?]
+	at com.example.service.PaymentService.calcularMinutosTrabalhados(PaymentService.java:75) ~[classes/:?]
+	at com.example.service.PaymentService.calcularPagamentoMensal(PaymentService.java:21) ~[classes/:?]
+	at com.example.app.menu.utilizadores.MenuPagamentos.mostrar(MenuPagamentos.java:37) ~[classes/:?]
+	at com.example.app.menu.utilizadores.MenuGestaoUtilizadores.mostrar(MenuGestaoUtilizadores.java:50) ~[classes/:?]
+	at com.example.app.menu.MenuPrincipal.handleGerente(MenuPrincipal.java:85) ~[classes/:?]
+	at com.example.app.menu.MenuPrincipal.iniciar(MenuPrincipal.java:60) ~[classes/:?]
+	at com.example.app.Main.main(Main.java:26) [classes/:?]
+2025-11-23 11:42:13 [main] INFO : Aplicação encerrada.
+2025-11-23 11:44:18 [main] INFO : Estrutura de ficheiros inicializada com sucesso.
+2025-11-23 11:44:18 [main] INFO : Iniciando a aplicação Sistema de Gestão.
+2025-11-23 11:44:18 [main] INFO : Carregados 5 utilizadores do ficheiro 'C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\users.json'.
+2025-11-23 11:44:18 [main] INFO : Gestão de estacionamento inicializada com capacidade: 10
+2025-11-23 11:44:22 [main] INFO : Login bem-sucedido: admin (gerente)
+2025-11-23 11:44:22 [main] INFO : Login efetuado: admin
+2025-11-23 11:44:23 [main] INFO : Gerente 'admin' acedeu à gestão de utilizadores.
+2025-11-23 11:44:32 [main] INFO : === Início cálculo pagamento para user3 em 11/2025 ===
+2025-11-23 11:44:32 [main] ERROR: Ocorreu um erro inesperado na aplicação.
+java.lang.NumberFormatException: For input string: "-  0"
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:67) ~[?:?]
+	at java.lang.Long.parseLong(Long.java:711) ~[?:?]
+	at java.lang.Long.parseLong(Long.java:836) ~[?:?]
+	at com.example.service.PaymentService.calcularMinutosTrabalhados(PaymentService.java:74) ~[classes/:?]
+	at com.example.service.PaymentService.calcularPagamentoMensal(PaymentService.java:22) ~[classes/:?]
+	at com.example.app.menu.utilizadores.MenuPagamentos.mostrar(MenuPagamentos.java:37) ~[classes/:?]
+	at com.example.app.menu.utilizadores.MenuGestaoUtilizadores.mostrar(MenuGestaoUtilizadores.java:50) ~[classes/:?]
+	at com.example.app.menu.MenuPrincipal.handleGerente(MenuPrincipal.java:85) ~[classes/:?]
+	at com.example.app.menu.MenuPrincipal.iniciar(MenuPrincipal.java:60) ~[classes/:?]
+	at com.example.app.Main.main(Main.java:26) [classes/:?]
+2025-11-23 11:44:32 [main] INFO : Aplicação encerrada.
+2025-11-23 11:46:28 [main] INFO : Estrutura de ficheiros inicializada com sucesso.
+2025-11-23 11:46:28 [main] INFO : Iniciando a aplicação Sistema de Gestão.
+2025-11-23 11:46:28 [main] INFO : Carregados 5 utilizadores do ficheiro 'C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\users.json'.
+2025-11-23 11:46:28 [main] INFO : Gestão de estacionamento inicializada com capacidade: 10
+2025-11-23 11:46:32 [main] ERROR: Ocorreu um erro inesperado na aplicação.
+java.util.NoSuchElementException: No line found
+	at java.util.Scanner.nextLine(Scanner.java:1651) ~[?:?]
+	at com.example.app.menu.login.MenuLogin.mostrar(MenuLogin.java:26) ~[classes/:?]
+	at com.example.app.menu.MenuPrincipal.iniciar(MenuPrincipal.java:36) ~[classes/:?]
+	at com.example.app.Main.main(Main.java:26) [classes/:?]
+2025-11-23 11:46:34 [main] INFO : Estrutura de ficheiros inicializada com sucesso.
+2025-11-23 11:46:34 [main] INFO : Iniciando a aplicação Sistema de Gestão.
+2025-11-23 11:46:34 [main] INFO : Carregados 5 utilizadores do ficheiro 'C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\users.json'.
+2025-11-23 11:46:34 [main] INFO : Gestão de estacionamento inicializada com capacidade: 10
+2025-11-23 11:46:38 [main] INFO : Login bem-sucedido: admin (gerente)
+2025-11-23 11:46:38 [main] INFO : Login efetuado: admin
+2025-11-23 11:46:40 [main] INFO : Gerente 'admin' acedeu à gestão de utilizadores.
+2025-11-23 11:46:47 [main] INFO : === Início cálculo pagamento para user3 em 11/2025 ===
+2025-11-23 11:46:47 [main] INFO : Pagamento gravado no ficheiro para user3: Final=146.95€
+2025-11-23 11:46:47 [main] INFO : Pagamento calculado: Bruto=162.2€, Desconto=15.25€, Total=146.95€
+2025-11-23 11:48:33 [main] INFO : === Início cálculo pagamento para user3 em 11/2025 ===
+2025-11-23 11:48:33 [main] INFO : Pagamento gravado no ficheiro para user3: Final=146.95€
+2025-11-23 11:48:33 [main] INFO : Pagamento calculado: Bruto=162.2€, Desconto=15.25€, Total=146.95€
+2025-11-23 11:49:43 [main] INFO : Voltando ao menu anterior.
+2025-11-23 11:49:43 [main] INFO : Logout efetuado: admin (gerente)
+2025-11-23 11:49:43 [main] INFO : Usuário 'admin' fez logout.
+2025-11-23 11:49:48 [main] INFO : Estrutura de ficheiros inicializada com sucesso.
+2025-11-23 11:49:48 [main] INFO : Iniciando a aplicação Sistema de Gestão.
+2025-11-23 11:49:48 [main] INFO : Carregados 5 utilizadores do ficheiro 'C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\users.json'.
+2025-11-23 11:49:48 [main] INFO : Gestão de estacionamento inicializada com capacidade: 10
+2025-11-23 11:49:51 [main] INFO : Login bem-sucedido: admin (gerente)
+2025-11-23 11:49:51 [main] INFO : Login efetuado: admin
+2025-11-23 11:49:53 [main] INFO : Gerente 'admin' acedeu à gestão de utilizadores.
+2025-11-23 11:50:00 [main] INFO : === Início cálculo pagamento para user3 em 11/2025 ===
+2025-11-23 11:50:00 [main] INFO : Pagamento gravado no ficheiro para user3: Final=146.95€
+2025-11-23 11:50:00 [main] INFO : Pagamento calculado: Bruto=162.2€, Desconto=15.25€, Total=146.95€
+2025-11-23 11:50:06 [main] INFO : Voltando ao menu anterior.
+2025-11-23 11:50:06 [main] INFO : Logout efetuado: admin (gerente)
+2025-11-23 11:50:06 [main] INFO : Usuário 'admin' fez logout.

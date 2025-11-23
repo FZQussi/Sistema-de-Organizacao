@@ -34,6 +34,11 @@ public class MenuPagamentos {
             return;
         }
 
+        // Calcula e mostra o pagamento
         paymentService.calcularPagamentoMensal(u, ano, mes);
+
+        // Mantém a informação visível até o utilizador decidir continuar
+        System.out.println("\nPressione Enter para voltar...");
+        sc.nextLine(); // Espera que o utilizador pressione Enter
     }
 }
