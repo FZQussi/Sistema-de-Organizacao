@@ -30,6 +30,7 @@ public class MenuGestaoUtilizadores {
             System.out.println("2 - Criar utilizador");
             System.out.println("3 - Alterar utilizador");
             System.out.println("4 - Remover utilizador");
+            System.out.println("5 - Pagamentos");
             System.out.println("0 - Voltar");
             System.out.print("Escolha: ");
 
@@ -46,6 +47,7 @@ public class MenuGestaoUtilizadores {
                 case 2 -> new MenuCriarUtilizador(userService).mostrar();
                 case 3 -> new MenuAlterarUtilizador(userService).mostrar();
                 case 4 -> new MenuRemoverUtilizador(userService).mostrar();
+                case 5 -> new MenuPagamentos(userService).mostrar();
                 case 0 -> logger.info("Voltando ao menu anterior.");
                 default -> {
                     if (opcao != 0) {

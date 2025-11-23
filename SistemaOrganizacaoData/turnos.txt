@@ -3,21 +3,18 @@
  - Entrada prevista: 08:10
  - Entrada real:     13:39:18.955356500
  - Atraso:           329 minutos
- - Saída prevista:   20:00
- - Saída real:       13:39:26.550373400
- - Diferença saída:  -380 minutos
+ - Saï¿½da prevista:   20:00
+ - Saï¿½da real:       13:39:26.550373400
+ - Diferenï¿½a saï¿½da:  -380 minutos
  - Total trabalhado: 0h 0min
 -----------------------------------------
-<<<<<<< HEAD
 
 [2025-11-21] user3 (operador)
  - Entrada prevista: 08:10
  - Entrada real:     14:05:44.993938700
  - Atraso:           355 minutos
- - Saída prevista:   20:00
- - Saída real:       14:05:47.491175600
- - Diferença saída:  -354 minutos
+ - Saï¿½da prevista:   20:00
+ - Saï¿½da real:       14:05:47.491175600
+ - Diferenï¿½a saï¿½da:  -354 minutos
  - Total trabalhado: 0h 0min
 -----------------------------------------
-=======
->>>>>>> b3d442bc0713074605841d1a7e0f55dbe4b6f685

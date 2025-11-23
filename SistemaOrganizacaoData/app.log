@@ -151,3 +151,32 @@ java.util.NoSuchElementException: No line found
 2025-11-21 14:05:47 [main] INFO : Usuário 'user3' fez logout.
 =======
 >>>>>>> b3d442bc0713074605841d1a7e0f55dbe4b6f685
+2025-11-23 11:35:04 [main] INFO : Ficheiro pagamentos.txt criado em: C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\pagamentos.txt
+2025-11-23 11:35:04 [main] INFO : Estrutura de ficheiros inicializada com sucesso.
+2025-11-23 11:35:04 [main] INFO : Iniciando a aplicação Sistema de Gestão.
+2025-11-23 11:35:04 [main] INFO : Carregados 5 utilizadores do ficheiro 'C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\users.json'.
+2025-11-23 11:35:04 [main] INFO : Gestão de estacionamento inicializada com capacidade: 10
+2025-11-23 11:35:10 [main] INFO : Login bem-sucedido: admin (gerente)
+2025-11-23 11:35:10 [main] INFO : Login efetuado: admin
+2025-11-23 11:35:12 [main] INFO : Gerente 'admin' acedeu à gestão de utilizadores.
+2025-11-23 11:35:24 [main] ERROR: Erro ao calcular atrasos
+java.lang.ArrayIndexOutOfBoundsException: Index 2 out of bounds for length 2
+	at com.example.service.PaymentService.calcularAtrasos(PaymentService.java:124) [classes/:?]
+	at com.example.service.PaymentService.calcularPagamentoMensal(PaymentService.java:23) [classes/:?]
+	at com.example.app.menu.utilizadores.MenuPagamentos.mostrar(MenuPagamentos.java:37) [classes/:?]
+	at com.example.app.menu.utilizadores.MenuGestaoUtilizadores.mostrar(MenuGestaoUtilizadores.java:50) [classes/:?]
+	at com.example.app.menu.MenuPrincipal.handleGerente(MenuPrincipal.java:85) [classes/:?]
+	at com.example.app.menu.MenuPrincipal.iniciar(MenuPrincipal.java:60) [classes/:?]
+	at com.example.app.Main.main(Main.java:26) [classes/:?]
+2025-11-23 11:35:50 [main] ERROR: Erro ao calcular atrasos
+java.lang.ArrayIndexOutOfBoundsException: Index 2 out of bounds for length 2
+	at com.example.service.PaymentService.calcularAtrasos(PaymentService.java:124) [classes/:?]
+	at com.example.service.PaymentService.calcularPagamentoMensal(PaymentService.java:23) [classes/:?]
+	at com.example.app.menu.utilizadores.MenuPagamentos.mostrar(MenuPagamentos.java:37) [classes/:?]
+	at com.example.app.menu.utilizadores.MenuGestaoUtilizadores.mostrar(MenuGestaoUtilizadores.java:50) [classes/:?]
+	at com.example.app.menu.MenuPrincipal.handleGerente(MenuPrincipal.java:85) [classes/:?]
+	at com.example.app.menu.MenuPrincipal.iniciar(MenuPrincipal.java:60) [classes/:?]
+	at com.example.app.Main.main(Main.java:26) [classes/:?]
+2025-11-23 11:37:22 [main] INFO : Voltando ao menu anterior.
+2025-11-23 11:37:22 [main] INFO : Logout efetuado: admin (gerente)
+2025-11-23 11:37:22 [main] INFO : Usuário 'admin' fez logout.

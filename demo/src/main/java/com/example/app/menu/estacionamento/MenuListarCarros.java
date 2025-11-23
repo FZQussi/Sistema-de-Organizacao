@@ -34,7 +34,7 @@ public class MenuListarCarros {
                 return;
             }
 
-            System.out.println("Opção inválida!");
+            System.out.println("Opcão inválida!");
         }
     }
 }

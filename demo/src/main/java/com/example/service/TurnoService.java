@@ -59,7 +59,7 @@ public class TurnoService {
                 "-----------------------------------------\n"
         );
 
-        logger.info("Saída de turno registada para '{}'. Diferença saída: {} minutos", u.getUsername(), diferencaSaida);
+        logger.info("Saída de turno registada para '{}'. Diferenca saída: {} minutos", u.getUsername(), diferencaSaida);
 
         this.userEmTurno = null;
     }

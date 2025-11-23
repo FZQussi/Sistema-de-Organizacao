@@ -18,11 +18,11 @@ public class FileUtils {
     private static File usersFile;
     private static File turnosFile;
     private static File nacionalidadesFile;
+    private static File pagamentosFile;   // <── NOVO
 
     // Lista padrão de nacionalidades
     private static final List<String> NACIONALIDADES_PADRAO = Arrays.asList(
             "Portugal", "Espanha", "Franca", "Alemanha", "Brasil", "Italia", "Reino Unido"
-            // adiciona mais se necessário
     );
 
     public static void initialize() {
@@ -68,6 +68,18 @@ public class FileUtils {
                 logger.error("Erro ao criar ficheiro nacionalidades.json", e);
             }
         }
+
+        // Pagamentos file  <─────────────────────────── NOVO BLOCO
+        pagamentosFile = new File(folder, "pagamentos.txt");
+        if (!pagamentosFile.exists()) {
+            try {
+                pagamentosFile.createNewFile();
+                logger.info("Ficheiro pagamentos.txt criado em: {}", pagamentosFile.getAbsolutePath());
+            } catch (IOException e) {
+                logger.error("Erro ao criar ficheiro pagamentos.txt", e);
+            }
+        }
+        // ---------------------------------------------------------
     }
 
     public static void salvarNacionalidades(List<String> nacionalidades) {
@@ -102,8 +114,11 @@ public class FileUtils {
         return nacionalidadesFile;
     }
 
+    public static File getPagamentosFile() {  // <── NOVO GETTER
+        return pagamentosFile;
+    }
+
     public static File getDataFolder() {
         return folder;
     }
 }
-
