@@ -27,10 +27,20 @@ public class MenuPrincipal {
     private final AuthService auth = new AuthService(userService);
     private final GestaoEstacionamento gestao = new GestaoEstacionamento(10);
 
+    // Cores ANSI
+    private static final String RESET = "\u001B[0m";
+    private static final String CYAN = "\u001B[36m";
+    private static final String GREEN = "\u001B[32m";
+    private static final String RED = "\u001B[31m";
+    private static final String YELLOW = "\u001B[33m";
+    private static final String BOLD = "\u001B[1m";
+
     public void iniciar() {
 
         ConsoleUtils.clear();
-        System.out.println("===== SISTEMA DE GESTÃO =====");
+        System.out.println(CYAN + BOLD + "╔═══════════════════════════════════════════════╗");
+        System.out.println("║              SISTEMA DE GESTÃO               ║");
+        System.out.println("╚═══════════════════════════════════════════════╝" + RESET);
 
         // 🔐 LOGIN
         Utilizador loggedUser = new MenuLogin(auth).mostrar();
@@ -38,22 +48,24 @@ public class MenuPrincipal {
         // 🔁 CICLO PRINCIPAL
         while (true) {
             ConsoleUtils.clear();
-            System.out.println("\n===== MENU PRINCIPAL =====");
+            System.out.println(CYAN + BOLD + "\n╔═══════════════════════════════════════════════╗");
+            System.out.println("║                  MENU PRINCIPAL              ║");
+            System.out.println("╚═══════════════════════════════════════════════╝" + RESET);
 
             if (loggedUser.getTipo().equals("gerente")) {
-                System.out.println("1 - Gestão de Utilizadores");
-                System.out.println("2 - Registrar entrada");
-                System.out.println("3 - Registrar saída");
-                System.out.println("4 - Listar carros");
-                System.out.println("0 - Sair");
+                System.out.println(YELLOW + "1" + RESET + " - Gestão de Utilizadores");
+                System.out.println(YELLOW + "2" + RESET + " - Registrar entrada");
+                System.out.println(YELLOW + "3" + RESET + " - Registrar saída");
+                System.out.println(YELLOW + "4" + RESET + " - Listar carros");
+                System.out.println(YELLOW + "0" + RESET + " - Sair");
             } else {
-                System.out.println("1 - Registrar entrada");
-                System.out.println("2 - Registrar saída");
-                System.out.println("3 - Listar carros");
-                System.out.println("0 - Sair");
+                System.out.println(YELLOW + "1" + RESET + " - Registrar entrada");
+                System.out.println(YELLOW + "2" + RESET + " - Registrar saída");
+                System.out.println(YELLOW + "3" + RESET + " - Listar carros");
+                System.out.println(YELLOW + "0" + RESET + " - Sair");
             }
 
-            System.out.print("Escolha: ");
+            System.out.print(CYAN + "→ Escolha: " + RESET);
             int escolha = lerOpcao();
 
             if (loggedUser.getTipo().equals("gerente")) {
@@ -70,8 +82,9 @@ public class MenuPrincipal {
 
     private int lerOpcao() {
         try {
-            return Integer.parseInt(sc.nextLine());
+            return Integer.parseInt(sc.nextLine().trim());
         } catch (NumberFormatException e) {
+            System.out.println(RED + "❌ Opção inválida!" + RESET);
             logger.warn("Entrada inválida no menu principal.");
             return -1;
         }
@@ -103,7 +116,7 @@ public class MenuPrincipal {
             case 0 -> sair(user);
 
             default -> {
-                System.out.println("Opção inválida!");
+                System.out.println(RED + "❌ Opção inválida!" + RESET);
                 logger.warn("Opção inválida selecionada por gerente: {}", escolha);
             }
         }
@@ -130,7 +143,7 @@ public class MenuPrincipal {
             case 0 -> sair(user);
 
             default -> {
-                System.out.println("Opção inválida!");
+                System.out.println(RED + "❌ Opção inválida!" + RESET);
                 logger.warn("Opção inválida selecionada por operador: {}", escolha);
             }
         }
@@ -139,7 +152,7 @@ public class MenuPrincipal {
     private void sair(Utilizador user) {
         auth.logout();
         logger.info("Usuário '{}' fez logout.", user.getUsername());
-        System.out.println("Sessão terminada.\n");
+        System.out.println(GREEN + "\n✔ Sessão terminada." + RESET);
         System.exit(0);
     }
 }

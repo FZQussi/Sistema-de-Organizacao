@@ -21,109 +21,140 @@ public class MenuCriarUtilizador {
     private final UserService userService;
     private final Scanner sc = new Scanner(System.in);
 
+    // --- Cores ANSI ---
+    private static final String RESET = "\u001B[0m";
+    private static final String CYAN = "\u001B[36m";
+    private static final String GREEN = "\u001B[32m";
+    private static final String RED = "\u001B[31m";
+    private static final String YELLOW = "\u001B[33m";
+    private static final String BOLD = "\u001B[1m";
+
     public MenuCriarUtilizador(UserService userService) {
         this.userService = userService;
     }
 
+    private void header() {
+        System.out.println(CYAN + BOLD + "╔══════════════════════════════════════════════╗");
+        System.out.println("║            CRIAR NOVO UTILIZADOR             ║");
+        System.out.println("╚══════════════════════════════════════════════╝" + RESET);
+        System.out.println();
+    }
+
     public void mostrar() {
         ConsoleUtils.clear();
+        header();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String dataNascimento;
 
-        System.out.println("\n=== Criar Novo Utilizador ===");
-        System.out.println("Digite 'ESC' a qualquer momento para cancelar e voltar ao menu anterior.\n");
+        System.out.println(YELLOW + "Digite 'ESC' para cancelar a qualquer momento.\n" + RESET);
 
-        System.out.print("Novo username: ");
+        // --- Username ---
+        System.out.print(YELLOW + "→ Novo username: " + RESET);
         String username = sc.nextLine();
         if (username.equalsIgnoreCase("ESC")) { cancel(); return; }
 
-        System.out.print("Password: ");
+        // --- Password ---
+        System.out.print(YELLOW + "→ Password: " + RESET);
         String pass = sc.nextLine();
         if (pass.equalsIgnoreCase("ESC")) { cancel(); return; }
 
         String hash = PasswordUtils.hash(pass);
         logger.debug("Password digitada: {}, Hash gerado: {}", pass, hash);
 
-        System.out.print("Nome: ");
+        // --- Nome ---
+        System.out.print(YELLOW + "→ Nome: " + RESET);
         String nome = sc.nextLine();
         if (nome.equalsIgnoreCase("ESC")) { cancel(); return; }
 
-        System.out.print("Sobrenome: ");
+        // --- Sobrenome ---
+        System.out.print(YELLOW + "→ Sobrenome: " + RESET);
         String sobrenome = sc.nextLine();
         if (sobrenome.equalsIgnoreCase("ESC")) { cancel(); return; }
 
-        System.out.print("Descrição: ");
+        // --- Descrição ---
+        System.out.print(YELLOW + "→ Descrição: " + RESET);
         String descricao = sc.nextLine();
         if (descricao.equalsIgnoreCase("ESC")) { cancel(); return; }
 
-        // --- Nacionalidade com validação ---
+        // --- Nacionalidade validada ---
         List<String> nacionalidadesValidas = FileUtils.carregarNacionalidades();
         String nacionalidade;
+
         while (true) {
-            System.out.print("Nacionalidade: ");
+            System.out.print(YELLOW + "→ Nacionalidade: " + RESET);
             nacionalidade = sc.nextLine();
+
             if (nacionalidade.equalsIgnoreCase("ESC")) { cancel(); return; }
 
             if (nacionalidadesValidas.contains(nacionalidade)) {
                 break;
-            } else {
-                System.out.println("\n❌ Nacionalidade inválida!");
-                System.out.println("Valores aceites: " + nacionalidadesValidas);
-                logger.warn("Nacionalidade inválida digitada: {}", nacionalidade);
             }
+
+            System.out.println(RED + "✖ Nacionalidade inválida!" + RESET);
+            System.out.println(YELLOW + "Valores aceites: " + nacionalidadesValidas + RESET);
+            logger.warn("Nacionalidade inválida digitada: {}", nacionalidade);
         }
 
-        // --- Data de nascimento com validação ---
+        // --- Data de nascimento ---
+        String dataNascimento;
         while (true) {
-            System.out.print("Data de nascimento (AAAA-MM-DD): ");
+            System.out.print(YELLOW + "→ Data de nascimento (AAAA-MM-DD): " + RESET);
             dataNascimento = sc.nextLine();
+
             if (dataNascimento.equalsIgnoreCase("ESC")) { cancel(); return; }
 
             try {
                 LocalDate.parse(dataNascimento, formatter);
                 break;
             } catch (DateTimeParseException e) {
-                System.out.println("❌ Formato inválido. Use: AAAA-MM-DD");
-                logger.warn("Data de nascimento inválida digitada: {}", dataNascimento);
+                System.out.println(RED + "✖ Formato inválido! Use AAAA-MM-DD." + RESET);
+                logger.warn("Data inválida digitada: {}", dataNascimento);
             }
         }
 
-        System.out.print("Salário: ");
+        // --- Salário ---
+        System.out.print(YELLOW + "→ Salário: " + RESET);
         String salInput = sc.nextLine();
         if (salInput.equalsIgnoreCase("ESC")) { cancel(); return; }
         double salario = Double.parseDouble(salInput);
 
-        System.out.print("Turno entrada (HH:mm): ");
+        // --- Turno entrada ---
+        System.out.print(YELLOW + "→ Turno entrada (HH:mm): " + RESET);
         String horaEntrada = sc.nextLine();
         if (horaEntrada.equalsIgnoreCase("ESC")) { cancel(); return; }
 
-        System.out.print("Turno saída (HH:mm): ");
+        // --- Turno saída ---
+        System.out.print(YELLOW + "→ Turno saída (HH:mm): " + RESET);
         String horaSaida = sc.nextLine();
         if (horaSaida.equalsIgnoreCase("ESC")) { cancel(); return; }
 
+        // --- Tipo ---
         String tipo;
         do {
-            System.out.print("Tipo (operador/gerente): ");
+            System.out.print(YELLOW + "→ Tipo (operador/gerente): " + RESET);
             tipo = sc.nextLine();
+
             if (tipo.equalsIgnoreCase("ESC")) { cancel(); return; }
+
             tipo = tipo.toLowerCase();
         } while (!tipo.equals("operador") && !tipo.equals("gerente"));
 
+        // --- Criar objeto ---
         Utilizador novo = new Utilizador(
-            username, hash, tipo, nome, sobrenome,
-            descricao, nacionalidade, dataNascimento,
-            salario, horaEntrada, horaSaida
+                username, hash, tipo, nome, sobrenome,
+                descricao, nacionalidade, dataNascimento,
+                salario, horaEntrada, horaSaida
         );
 
         userService.addUser(novo);
         logger.info("Novo utilizador criado: {} ({})", username, tipo);
 
-        System.out.println("\n✔ Utilizador criado com sucesso!");
+        System.out.println(CYAN + "\n──────────────────────────────────────────────" + RESET);
+        System.out.println(GREEN + BOLD + "✔ Utilizador criado com sucesso!" + RESET);
     }
 
     private void cancel() {
-        System.out.println("\n⚠ Operação cancelada. Voltando ao menu anterior.");
-        logger.info("Operação de criação de utilizador cancelada pelo utilizador.");
+        System.out.println(RED + "\n⚠ Operação cancelada. Voltando ao menu anterior." + RESET);
+        logger.info("Operação de criação cancelada pelo utilizador.");
     }
 }
