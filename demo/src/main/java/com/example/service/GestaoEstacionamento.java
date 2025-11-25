@@ -5,6 +5,8 @@ import com.example.model.Estacionamento;
 import com.example.utils.MovimentosUtils;
 
 import java.time.LocalDateTime;
+import java.time.Duration;
+
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,7 +33,7 @@ public class GestaoEstacionamento {
     return sucesso;
 }
 
-}
+
 private double calcularPreco(long minutos) {
     double precoHora = 1.50;  // por exemplo
     return (minutos / 60.0) * precoHora;

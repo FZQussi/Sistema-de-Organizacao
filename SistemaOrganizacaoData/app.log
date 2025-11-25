@@ -301,3 +301,22 @@ java.util.NoSuchElementException: No line found
 2025-11-24 09:28:05 [main] INFO : Voltando ao menu anterior.
 2025-11-24 09:28:05 [main] INFO : Logout efetuado: admin (gerente)
 2025-11-24 09:28:05 [main] INFO : Usuário 'admin' fez logout.
+2025-11-25 09:31:04 [main] INFO : Ficheiro movimentos.txt criado em: C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\movimentos.txt
+2025-11-25 09:31:04 [main] INFO : Estrutura de ficheiros inicializada com sucesso.
+2025-11-25 09:31:04 [main] INFO : Iniciando a aplicação Sistema de Gestão.
+2025-11-25 09:31:04 [main] INFO : Carregados 5 utilizadores do ficheiro 'C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\users.json'.
+2025-11-25 09:31:04 [main] INFO : Gestão de estacionamento inicializada com capacidade: 10
+2025-11-25 09:31:11 [main] INFO : Entrada de turno registada para 'user3'. Atraso: 81 minutos
+2025-11-25 09:31:11 [main] INFO : Entrada de turno registada para operador 'user3'.
+2025-11-25 09:31:11 [main] INFO : Login bem-sucedido: user3 (operador)
+2025-11-25 09:31:11 [main] INFO : Login efetuado: user3
+2025-11-25 09:31:13 [main] WARN : Entrada inválida no menu principal.
+2025-11-25 09:31:13 [main] WARN : Opção inválida selecionada por operador: -1
+2025-11-25 09:31:15 [main] INFO : Operador 'user3' acedeu ao registo de entradas.
+2025-11-25 09:31:36 [main] INFO : Entrada registada: AA-11-11 cu ra cao 2000
+2025-11-25 09:32:06 [main] INFO : Operador 'user3' acedeu ao registo de saídas.
+2025-11-25 09:32:10 [main] INFO : Saída registada para a placa: AA-11-11
+2025-11-25 09:32:15 [main] INFO : Saída de turno registada para 'user3'. Diferenca saída: -627 minutos
+2025-11-25 09:32:15 [main] INFO : Saída de turno registada para operador 'user3'.
+2025-11-25 09:32:15 [main] INFO : Logout efetuado: user3 (operador)
+2025-11-25 09:32:15 [main] INFO : Usuário 'user3' fez logout.
