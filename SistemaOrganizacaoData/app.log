@@ -290,3 +290,14 @@ java.util.NoSuchElementException: No line found
 2025-11-23 11:50:06 [main] INFO : Voltando ao menu anterior.
 2025-11-23 11:50:06 [main] INFO : Logout efetuado: admin (gerente)
 2025-11-23 11:50:06 [main] INFO : Usuário 'admin' fez logout.
+2025-11-24 09:27:44 [main] INFO : Estrutura de ficheiros inicializada com sucesso.
+2025-11-24 09:27:44 [main] INFO : Iniciando a aplicação Sistema de Gestão.
+2025-11-24 09:27:44 [main] INFO : Carregados 5 utilizadores do ficheiro 'C:\Users\Ricardo Santos\Desktop\Organizador\Sistema-de-Organizacao\SistemaOrganizacaoData\users.json'.
+2025-11-24 09:27:44 [main] INFO : Gestão de estacionamento inicializada com capacidade: 10
+2025-11-24 09:27:52 [main] INFO : Login bem-sucedido: admin (gerente)
+2025-11-24 09:27:52 [main] INFO : Login efetuado: admin
+2025-11-24 09:27:54 [main] INFO : Gerente 'admin' acedeu à gestão de utilizadores.
+2025-11-24 09:28:01 [main] INFO : Operação de criação cancelada pelo utilizador.
+2025-11-24 09:28:05 [main] INFO : Voltando ao menu anterior.
+2025-11-24 09:28:05 [main] INFO : Logout efetuado: admin (gerente)
+2025-11-24 09:28:05 [main] INFO : Usuário 'admin' fez logout.
