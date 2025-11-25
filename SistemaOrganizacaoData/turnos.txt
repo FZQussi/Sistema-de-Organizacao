@@ -159,3 +159,13 @@
  - Total trabalhado: 11h 36min
 -----------------------------------------
 
+
+[2025-11-25] user3 (operador)
+ - Entrada prevista: 08:10
+ - Entrada real:     09:31:11.920376200
+ - Atraso:           81 minutos
+ - Saída prevista:   20:00
+ - Saída real:       09:32:15.823577800
+ - Diferença saída:  -627 minutos
+ - Total trabalhado: 0h 1min
+-----------------------------------------
