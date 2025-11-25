@@ -13,6 +13,14 @@ public class Estacionamento {
         this.capacidade = capacidade;
         this.carros = new ArrayList<>();
     }
+    public Carro getCarro(String placa) {
+    for (Carro c : carros) {
+        if (c.getPlaca().equalsIgnoreCase(placa)) {
+            return c;
+        }
+    }
+    return null;
+}
 
     public boolean entrada(Carro carro) {
         if (carros.size() >= capacidade) {

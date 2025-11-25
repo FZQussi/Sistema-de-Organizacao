@@ -19,6 +19,8 @@ public class FileUtils {
     private static File turnosFile;
     private static File nacionalidadesFile;
     private static File pagamentosFile;   // <── NOVO
+    private static File movimentosFile;  // <── NOVO
+
 
     // Lista padrão de nacionalidades
     private static final List<String> NACIONALIDADES_PADRAO = Arrays.asList(
@@ -30,6 +32,17 @@ public class FileUtils {
         if (!folder.exists()) {
             folder.mkdir();
             logger.info("Pasta de dados criada: {}", folder.getAbsolutePath());
+        }
+
+                // Movimentos file  <─────────────────────────── NOVO BLOCO
+        movimentosFile = new File(folder, "movimentos.txt");
+        if (!movimentosFile.exists()) {
+            try {
+                movimentosFile.createNewFile();
+                logger.info("Ficheiro movimentos.txt criado em: {}", movimentosFile.getAbsolutePath());
+            } catch (IOException e) {
+                logger.error("Erro ao criar ficheiro movimentos.txt", e);
+            }
         }
 
         // Users file
@@ -121,4 +134,8 @@ public class FileUtils {
     public static File getDataFolder() {
         return folder;
     }
+    public static File getMovimentosFile() {
+    return movimentosFile;
+}
+
 }
