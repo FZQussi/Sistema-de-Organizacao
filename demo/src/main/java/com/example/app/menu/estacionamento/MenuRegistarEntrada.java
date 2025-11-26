@@ -20,7 +20,7 @@ public class MenuRegistarEntrada {
         this.out = out;
     }
 
-    private String pedirMatricula() {
+    public String pedirMatricula() {
         while (true) {
             out.print("→ Placa (0 para voltar): ");
             String placa = sc.nextLine().trim().toUpperCase();
@@ -36,7 +36,7 @@ public class MenuRegistarEntrada {
         }
     }
 
-    private int pedirAno() {
+    public int pedirAno() {
         while (true) {
             out.print("→ Ano: ");
             try {

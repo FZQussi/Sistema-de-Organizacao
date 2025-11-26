@@ -100,7 +100,8 @@ public class MenuPrincipal {
 
             case 2 -> {
                 logger.info("Gerente '{}' acedeu ao registo de entradas.", user.getUsername());
-                new MenuRegistarEntrada(gestao).mostrar();
+                new MenuRegistarEntrada(gestao, sc, System.out).mostrar();
+
             }
 
             case 3 -> {
@@ -127,7 +128,8 @@ public class MenuPrincipal {
 
             case 1 -> {
                 logger.info("Operador '{}' acedeu ao registo de entradas.", user.getUsername());
-                new MenuRegistarEntrada(gestao).mostrar();
+                new MenuRegistarEntrada(gestao, sc, System.out).mostrar();
+
             }
 
             case 2 -> {
