@@ -40,11 +40,11 @@ public class PaymentService {
         System.out.println("Horas de atraso:   " + horasAtraso);
         System.out.println("Salário por hora:  " + salarioHora);
         System.out.println("-------------------------------");
-        System.out.println("Bruto:             " + pagamentoBruto + "€");
-        System.out.println("Desconto atrasos:  -" + descontoAtrasos + "€");
-        System.out.println("TOTAL A PAGAR:     " + pagamentoFinal + "€");
+        System.out.println("Bruto:             " + pagamentoBruto + "Eur");
+        System.out.println("Desconto atrasos:  -" + descontoAtrasos + "Eur");
+        System.out.println("TOTAL A PAGAR:     " + pagamentoFinal + "Eur");
 
-        logger.info("Pagamento calculado: Bruto={}€, Desconto={}€, Total={}€",
+        logger.info("Pagamento calculado: Bruto={}Eur, Desconto={}Eur, Total={}Eur",
                 pagamentoBruto, descontoAtrasos, pagamentoFinal);
     }
 
