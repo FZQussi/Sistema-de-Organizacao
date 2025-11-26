@@ -72,7 +72,7 @@ public class MenuCriarUtilizador {
         if (sobrenome.equalsIgnoreCase("ESC")) { cancel(); return; }
 
         // --- Descrição ---
-        System.out.print(YELLOW + "→ Descrição: " + RESET);
+        System.out.print(YELLOW + "→ Descricão: " + RESET);
         String descricao = sc.nextLine();
         if (descricao.equalsIgnoreCase("ESC")) { cancel(); return; }
 
@@ -154,7 +154,7 @@ public class MenuCriarUtilizador {
     }
 
     private void cancel() {
-        System.out.println(RED + "\n⚠ Operação cancelada. Voltando ao menu anterior." + RESET);
-        logger.info("Operação de criação cancelada pelo utilizador.");
+        System.out.println(RED + "\n⚠ Operacão cancelada. Voltando ao menu anterior." + RESET);
+        logger.info("Opercão de criacão cancelada pelo utilizador.");
     }
 }

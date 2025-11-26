@@ -74,7 +74,7 @@ public class MenuAlterarUtilizador {
         if (!sobrenome.isEmpty()) atual.setSobrenome(sobrenome);
 
         // ========== Descrição ==========
-        System.out.print(YELLOW + "→ Descrição (" + atual.getDescricao() + "): " + RESET);
+        System.out.print(YELLOW + "→ Descricão (" + atual.getDescricao() + "): " + RESET);
         String descricao = sc.nextLine();
         if (descricao.equalsIgnoreCase("ESC")) { cancel(); return; }
         if (!descricao.isEmpty()) atual.setDescricao(descricao);
@@ -155,8 +155,8 @@ public class MenuAlterarUtilizador {
     }
 
     private void cancel() {
-        System.out.println(RED + "\n⚠ Operação cancelada. Voltando ao menu anterior." + RESET);
-        logger.info("Operação de alteração cancelada pelo utilizador.");
+        System.out.println(RED + "\n⚠ Operacão cancelada. Voltando ao menu anterior." + RESET);
+        logger.info("Operacão de alteracão cancelada pelo utilizador.");
     }
 }
 

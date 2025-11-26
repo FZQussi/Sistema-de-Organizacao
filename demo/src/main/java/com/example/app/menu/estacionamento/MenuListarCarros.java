@@ -53,7 +53,7 @@ public class MenuListarCarros {
                 return;
             }
 
-            System.out.println(RED + BOLD + "\n✖ Opção inválida! Tente novamente." + RESET);
+            System.out.println(RED + BOLD + "\n✖ Opcão inválida! Tente novamente." + RESET);
             System.out.println(CYAN + "────────────────────────────────────────────────────\n" + RESET);
         }
     }

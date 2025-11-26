@@ -27,7 +27,7 @@ public class Main {
         } catch (Exception e) {
             logger.error("Ocorreu um erro inesperado na aplicação.", e);
         } finally {
-            logger.info("Aplicação encerrada.");
+            logger.info("Aplicacão encerrada.");
         }
     }
 }

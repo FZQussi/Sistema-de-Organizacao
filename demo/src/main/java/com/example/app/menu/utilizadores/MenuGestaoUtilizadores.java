@@ -52,7 +52,7 @@ public class MenuGestaoUtilizadores {
             try {
                 opcao = Integer.parseInt(sc.nextLine());
             } catch (NumberFormatException e) {
-                System.out.println(RED + "\n✖ Opção inválida! Digite um número.\n" + RESET);
+                System.out.println(RED + "\n✖ Opcão inválida! Digite um número.\n" + RESET);
                 logger.warn("Entrada inválida no menu de gestão de utilizadores.", e);
                 opcao = -1;
                 continue;
@@ -71,7 +71,7 @@ public class MenuGestaoUtilizadores {
                 }
 
                 default -> {
-                    System.out.println(RED + "\n✖ Opção inválida. Tente novamente.\n" + RESET);
+                    System.out.println(RED + "\n✖ Opcão inválida. Tente novamente.\n" + RESET);
                     logger.warn("Opção inválida: {}", opcao);
                 }
             }

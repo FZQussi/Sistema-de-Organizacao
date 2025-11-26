@@ -45,7 +45,7 @@ public class MenuListagemUtilizadores {
             System.out.println(YELLOW + "1" + RESET + " - Listar todos (ordenado)");
             System.out.println(YELLOW + "2" + RESET + " - Filtrar por tipo");
             System.out.println(YELLOW + "3" + RESET + " - Procurar por nome");
-            System.out.println(YELLOW + "4" + RESET + " - Listar com paginação");
+            System.out.println(YELLOW + "4" + RESET + " - Listar com paginacão");
             System.out.println(YELLOW + "0" + RESET + " - Voltar\n");
 
             System.out.print(CYAN + "→ Escolha: " + RESET);
@@ -53,7 +53,7 @@ public class MenuListagemUtilizadores {
             try {
                 opcao = Integer.parseInt(sc.nextLine().trim());
             } catch (NumberFormatException e) {
-                System.out.println(RED + "\n✖ Opção inválida! Digite um número." + RESET);
+                System.out.println(RED + "\n✖ Opcão inválida! Digite um número." + RESET);
                 logger.warn("Entrada inválida no menu de listagem de utilizadores.", e);
                 opcao = -1;
             }
@@ -66,8 +66,8 @@ public class MenuListagemUtilizadores {
                 case 0 -> logger.info("Voltando ao menu anterior.");
                 default -> {
                     if (opcao != 0) {
-                        System.out.println(RED + "\n✖ Opção inválida. Tente novamente.\n" + RESET);
-                        logger.warn("Opção inválida: {}", opcao);
+                        System.out.println(RED + "\n✖ Opcão inválida. Tente novamente.\n" + RESET);
+                        logger.warn("Opcão inválida: {}", opcao);
                     }
                 }
             }

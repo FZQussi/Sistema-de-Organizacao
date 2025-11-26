@@ -84,7 +84,7 @@ public class MenuPrincipal {
         try {
             return Integer.parseInt(sc.nextLine().trim());
         } catch (NumberFormatException e) {
-            System.out.println(RED + "❌ Opção inválida!" + RESET);
+            System.out.println(RED + "❌ Opcão inválida!" + RESET);
             logger.warn("Entrada inválida no menu principal.");
             return -1;
         }
@@ -116,8 +116,8 @@ public class MenuPrincipal {
             case 0 -> sair(user);
 
             default -> {
-                System.out.println(RED + "❌ Opção inválida!" + RESET);
-                logger.warn("Opção inválida selecionada por gerente: {}", escolha);
+                System.out.println(RED + "❌ Opcão inválida!" + RESET);
+                logger.warn("Opcão inválida selecionada por gerente: {}", escolha);
             }
         }
     }
@@ -143,8 +143,8 @@ public class MenuPrincipal {
             case 0 -> sair(user);
 
             default -> {
-                System.out.println(RED + "❌ Opção inválida!" + RESET);
-                logger.warn("Opção inválida selecionada por operador: {}", escolha);
+                System.out.println(RED + "❌ Opcão inválida!" + RESET);
+                logger.warn("Opcão inválida selecionada por operador: {}", escolha);
             }
         }
     }

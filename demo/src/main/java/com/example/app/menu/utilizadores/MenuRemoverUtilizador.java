@@ -66,7 +66,7 @@ public class MenuRemoverUtilizador {
 
         if (!confirm.equals("s")) {
             System.out.println(RED + "❌ Ação cancelada." + RESET);
-            logger.info("Remoção cancelada pelo utilizador para '{}'", username);
+            logger.info("Remocão cancelada pelo utilizador para '{}'", username);
             return;
         }
 
