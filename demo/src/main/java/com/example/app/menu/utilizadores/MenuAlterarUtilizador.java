@@ -158,5 +158,36 @@ public class MenuAlterarUtilizador {
         System.out.println(RED + "\n⚠ Operacão cancelada. Voltando ao menu anterior." + RESET);
         logger.info("Operacão de alteracão cancelada pelo utilizador.");
     }
+    // MÉTODO AUXILIAR PARA TESTES (sem Scanner)
+public boolean alterarUtilizador(
+        String username,
+        String nome,
+        String sobrenome,
+        String descricao,
+        String nacionalidade,
+        String dataNascimento,
+        String salario,
+        String turnoEntrada,
+        String turnoSaida,
+        String tipo) {
+
+    Utilizador atual = userService.getByUsername(username);
+    if (atual == null) return false;
+
+    if (!nome.isEmpty()) atual.setNome(nome);
+    if (!sobrenome.isEmpty()) atual.setSobrenome(sobrenome);
+    if (!descricao.isEmpty()) atual.setDescricao(descricao);
+    if (!nacionalidade.isEmpty()) atual.setNacionalidade(nacionalidade);
+    if (!dataNascimento.isEmpty()) atual.setDataNascimento(dataNascimento);
+    if (!salario.isEmpty()) atual.setSalario(Double.parseDouble(salario));
+    if (!turnoEntrada.isEmpty()) atual.setTurnoEntrada(turnoEntrada);
+    if (!turnoSaida.isEmpty()) atual.setTurnoSaida(turnoSaida);
+    if (!tipo.isEmpty()) atual.setTipo(tipo);
+
+    userService.updateUser(username, atual);
+
+    return true;
+}
+
 }
 
