@@ -5,6 +5,7 @@ import com.example.utils.ConsoleUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.PrintStream;
 import java.util.Scanner;
 
 public class MenuListarCarros {
@@ -12,7 +13,8 @@ public class MenuListarCarros {
     private static final Logger logger = LogManager.getLogger(MenuListarCarros.class);
 
     private final GestaoEstacionamento gestao;
-    private final Scanner sc = new Scanner(System.in);
+    private final Scanner sc;
+    private final PrintStream out;
 
     // Cores ANSI
     private static final String RESET = "\u001B[0m";
@@ -22,15 +24,23 @@ public class MenuListarCarros {
     private static final String YELLOW = "\u001B[33m";
     private static final String BOLD = "\u001B[1m";
 
-    public MenuListarCarros(GestaoEstacionamento gestao) {
+    // Construtor testável
+    public MenuListarCarros(GestaoEstacionamento gestao, Scanner sc, PrintStream out) {
         this.gestao = gestao;
+        this.sc = sc;
+        this.out = out;
+    }
+
+    // Construtor normal
+    public MenuListarCarros(GestaoEstacionamento gestao) {
+        this(gestao, new Scanner(System.in), System.out);
     }
 
     private void header() {
-        System.out.println(CYAN + BOLD + "╔═══════════════════════════════════════════════════╗");
-        System.out.println("║         LISTAGEM DE CARROS NO ESTACIONAMENTO      ║");
-        System.out.println("╚═══════════════════════════════════════════════════╝" + RESET);
-        System.out.println();
+        out.println(CYAN + BOLD + "╔═══════════════════════════════════════════════════╗");
+        out.println("║         LISTAGEM DE CARROS NO ESTACIONAMENTO      ║");
+        out.println("╚═══════════════════════════════════════════════════╝" + RESET);
+        out.println();
     }
 
     public void mostrar() {
@@ -38,13 +48,13 @@ public class MenuListarCarros {
             ConsoleUtils.clear();
             header();
 
-            System.out.println(GREEN + BOLD + "Carros atualmente estacionados:\n" + RESET);
+            out.println(GREEN + BOLD + "Carros atualmente estacionados:\n" + RESET);
 
-            gestao.listarVagas(); // <- método do teu serviço (assume que imprime cada vaga)
+            gestao.listarVagas(); // Vamos mockar isto nos testes
 
-            System.out.println(CYAN + "\n────────────────────────────────────────────────────" + RESET);
-            System.out.println(YELLOW + "0 - Voltar" + RESET);
-            System.out.print(YELLOW + "→ Escolha: " + RESET);
+            out.println(CYAN + "\n────────────────────────────────────────────────────" + RESET);
+            out.println(YELLOW + "0 - Voltar" + RESET);
+            out.print(YELLOW + "→ Escolha: " + RESET);
 
             String opcao = sc.nextLine().trim();
 
@@ -53,9 +63,8 @@ public class MenuListarCarros {
                 return;
             }
 
-            System.out.println(RED + BOLD + "\n✖ Opcão inválida! Tente novamente." + RESET);
-            System.out.println(CYAN + "────────────────────────────────────────────────────\n" + RESET);
+            out.println(RED + BOLD + "\n✖ Opcão inválida! Tente novamente." + RESET);
+            out.println(CYAN + "────────────────────────────────────────────────────\n" + RESET);
         }
     }
 }
-
