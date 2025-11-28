@@ -26,6 +26,32 @@ public class MenuGestaoUtilizadores {
         this.userService = userService;
     }
 
+    // ============================================================
+    // MÉTODOS FACTORY — permitem substituir menus durante testes
+    // ============================================================
+
+    protected MenuListagemUtilizadores criarMenuListagem() {
+        return new MenuListagemUtilizadores(userService);
+    }
+
+    protected MenuCriarUtilizador criarMenuCriar() {
+        return new MenuCriarUtilizador(userService);
+    }
+
+    protected MenuAlterarUtilizador criarMenuAlterar() {
+        return new MenuAlterarUtilizador(userService);
+    }
+
+    protected MenuRemoverUtilizador criarMenuRemover() {
+        return new MenuRemoverUtilizador(userService);
+    }
+
+    protected MenuPagamentos criarMenuPagamentos() {
+        return new MenuPagamentos(userService);
+    }
+
+    // ============================================================
+
     private void header() {
         System.out.println(CYAN + BOLD + "╔═══════════════════════════════════════════════╗");
         System.out.println("║             GESTÃO DE UTILIZADORES            ║");
@@ -59,11 +85,11 @@ public class MenuGestaoUtilizadores {
             }
 
             switch (opcao) {
-                case 1 -> new MenuListagemUtilizadores(userService).mostrar();
-                case 2 -> new MenuCriarUtilizador(userService).mostrar();
-                case 3 -> new MenuAlterarUtilizador(userService).mostrar();
-                case 4 -> new MenuRemoverUtilizador(userService).mostrar();
-                case 5 -> new MenuPagamentos(userService).mostrar();
+                case 1 -> criarMenuListagem().mostrar();
+                case 2 -> criarMenuCriar().mostrar();
+                case 3 -> criarMenuAlterar().mostrar();
+                case 4 -> criarMenuRemover().mostrar();
+                case 5 -> criarMenuPagamentos().mostrar();
 
                 case 0 -> {
                     logger.info("Voltando ao menu anterior.");
