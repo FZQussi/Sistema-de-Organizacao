@@ -157,4 +157,47 @@ public class MenuCriarUtilizador {
         System.out.println(RED + "\n⚠ Operacão cancelada. Voltando ao menu anterior." + RESET);
         logger.info("Opercão de criacão cancelada pelo utilizador.");
     }
+    // ===============================
+// MÉTODO AUXILIAR PARA TESTES
+// ===============================
+public Utilizador criarUtilizadorTest(
+        String username,
+        String password,
+        String nome,
+        String sobrenome,
+        String descricao,
+        String nacionalidade,
+        String dataNascimento,
+        double salario,
+        String turnoEntrada,
+        String turnoSaida,
+        String tipo
+) {
+    // Validar nacionalidade
+    List<String> nacionaisValidas = FileUtils.carregarNacionalidades();
+    if (!nacionaisValidas.contains(nacionalidade)) {
+        return null; // invalida
+    }
+
+    // Validar data
+    try {
+        LocalDate.parse(dataNascimento);
+    } catch (Exception e) {
+        return null;
+    }
+
+    // Hash da password
+    String hash = PasswordUtils.hash(password);
+
+    Utilizador novo = new Utilizador(
+            username, hash, tipo, nome, sobrenome, descricao,
+            nacionalidade, dataNascimento, salario,
+            turnoEntrada, turnoSaida
+    );
+
+    userService.addUser(novo);
+
+    return novo;
+}
+
 }
