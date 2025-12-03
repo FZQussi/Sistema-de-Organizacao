@@ -29,6 +29,11 @@ public class Carro {
 
     public LocalDateTime getEntrada() { return entrada; }
     public LocalDateTime getSaida() { return saida; }
+
+    public void setEntrada(LocalDateTime entrada) {
+        this.entrada = entrada;
+    }
+
     public void setSaida(LocalDateTime saida) { this.saida = saida; }
 
     @Override
