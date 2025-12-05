@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,7 +31,8 @@ class UserServiceTest {
         File fakeFile = mock(File.class);
 
         when(FileUtils.getUsersFile()).thenReturn(fakeFile);
-        when(FileUtils.initialize()).thenReturn(null);
+        fileMock.when(FileUtils::initialize).thenAnswer(inv -> null);
+
 
         // Fake ficheiro "existe" e tem conteúdo vazio
         when(fakeFile.exists()).thenReturn(true);
