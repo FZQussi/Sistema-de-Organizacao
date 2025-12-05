@@ -1,5 +1,219 @@
 package com.example.service;
 
-public class UserServiceTest {
-    
+import com.example.model.Utilizador;
+import com.example.utils.FileUtils;
+
+import org.junit.jupiter.api.*;
+import org.mockito.MockedStatic;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.util.List;
+
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+class UserServiceTest {
+
+    private UserService service;
+    private Utilizador u1, u2, u3;
+
+    MockedStatic<FileUtils> fileMock;
+
+    @BeforeEach
+    void setup() throws Exception {
+
+        // Mock da classe FileUtils
+        fileMock = mockStatic(FileUtils.class);
+
+        File fakeFile = mock(File.class);
+
+        when(FileUtils.getUsersFile()).thenReturn(fakeFile);
+        when(FileUtils.initialize()).thenReturn(null);
+
+        // Fake ficheiro "existe" e tem conteúdo vazio
+        when(fakeFile.exists()).thenReturn(true);
+        when(fakeFile.length()).thenReturn(0L);
+
+        service = new UserService();
+
+        // Criar alguns utilizadores
+        u1 = new Utilizador("joao", "João", "Silva", "Funcionario",
+                "08:00", "16:00", "pass");
+        u2 = new Utilizador("ana", "Ana", "Costa", "Admin",
+                "09:00", "17:00", "pass");
+        u3 = new Utilizador("bruno", "Bruno", "Santos", "Funcionario",
+                "07:00", "15:00", "pass");
+    }
+
+    @AfterEach
+    void cleanup() {
+        fileMock.close();
+    }
+
+    // ---------------------------
+    //        TESTE ADD USER
+    // ---------------------------
+
+    @Test
+    void testAddUser() throws Exception {
+
+        // Mock para evitar escrita real
+        FileWriter writer = mock(FileWriter.class);
+        mockFileWriter(writer);
+
+        service.addUser(u1);
+
+        assertEquals(1, service.getAllUsers().size());
+        assertEquals("joao", service.getAllUsers().get(0).getUsername());
+
+        verify(writer, atLeastOnce()).write(anyString());
+    }
+
+    // ---------------------------
+    //        TESTE REMOVE
+    // ---------------------------
+
+    @Test
+    void testRemoveUser() throws Exception {
+
+        mockFileWriter(mock(FileWriter.class));
+
+        service.addUser(u1);
+        service.addUser(u2);
+
+        service.removeUser("joao");
+
+        assertEquals(1, service.getAllUsers().size());
+        assertNull(service.getByUsername("joao"));
+    }
+
+    // ---------------------------
+    //        TESTE UPDATE
+    // ---------------------------
+
+    @Test
+    void testUpdateUser() throws Exception {
+
+        mockFileWriter(mock(FileWriter.class));
+
+        service.addUser(u1);
+
+        Utilizador novos = new Utilizador(
+                "joao", "João Pedro", "Almeida",
+                "Admin", "08:00", "16:00", "novaPass"
+        );
+
+        service.updateUser("joao", novos);
+
+        Utilizador result = service.getByUsername("joao");
+
+        assertEquals("João Pedro", result.getNome());
+        assertEquals("Admin", result.getTipo());
+    }
+
+    // ---------------------------
+    //        TESTE GET
+    // ---------------------------
+
+    @Test
+    void testGetByUsername() throws Exception {
+
+        mockFileWriter(mock(FileWriter.class));
+
+        service.addUser(u1);
+        service.addUser(u2);
+
+        assertEquals("Ana", service.getByUsername("ana").getNome());
+        assertNull(service.getByUsername("xxxx"));
+    }
+
+    // ---------------------------
+    //   TESTE LISTAGEM ORDENADA
+    // ---------------------------
+
+    @Test
+    void testListarOrdenado() throws Exception {
+
+        mockFileWriter(mock(FileWriter.class));
+
+        service.addUser(u1);
+        service.addUser(u2);
+        service.addUser(u3);
+
+        List<Utilizador> lista = service.listarOrdenado();
+
+        assertEquals("ana", lista.get(0).getUsername());
+        assertEquals("bruno", lista.get(1).getUsername());
+        assertEquals("joao", lista.get(2).getUsername());
+    }
+
+    // ---------------------------
+    //     TESTE POR TIPO
+    // ---------------------------
+
+    @Test
+    void testListarPorTipo() throws Exception {
+
+        mockFileWriter(mock(FileWriter.class));
+
+        service.addUser(u1);
+        service.addUser(u2);
+        service.addUser(u3);
+
+        List<Utilizador> funcionarios = service.listarPorTipo("Funcionario");
+
+        assertEquals(2, funcionarios.size());
+        assertTrue(funcionarios.stream().anyMatch(u -> u.getUsername().equals("joao")));
+        assertTrue(funcionarios.stream().anyMatch(u -> u.getUsername().equals("bruno")));
+    }
+
+    // ---------------------------
+    //   TESTE BUSCAR POR NOME
+    // ---------------------------
+
+    @Test
+    void testBuscarPorNome() throws Exception {
+
+        mockFileWriter(mock(FileWriter.class));
+
+        service.addUser(u1);
+        service.addUser(u2);
+
+        List<Utilizador> r = service.buscarPorNome("joão");
+
+        assertEquals(1, r.size());
+        assertEquals("joao", r.get(0).getUsername());
+    }
+
+    // ---------------------------
+    //         PAGINAÇÃO
+    // ---------------------------
+
+    @Test
+    void testListarPaginado() throws Exception {
+
+        mockFileWriter(mock(FileWriter.class));
+
+        service.addUser(u1);
+        service.addUser(u2);
+        service.addUser(u3);
+
+        List<Utilizador> page0 = service.listarPaginado(0, 2);
+        List<Utilizador> page1 = service.listarPaginado(1, 2);
+
+        assertEquals(2, page0.size());
+        assertEquals(1, page1.size());
+    }
+
+
+
+    // =======================================
+    //         AUXILIAR PARA MOCK FILEWRITER
+    // =======================================
+
+    private void mockFileWriter(FileWriter writer) throws Exception {
+        MockedStatic<FileWriter> writerMock = mockStatic(FileWriter.class);
+        writerMock.when(() -> new FileWriter(any(File.class))).thenReturn(writer);
+    }
 }
