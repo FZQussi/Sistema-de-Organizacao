@@ -37,13 +37,24 @@ class UserServiceTest {
 
         service = new UserService();
 
-        // Criar alguns utilizadores
-        u1 = new Utilizador("joao", "João", "Silva", "Funcionario",
-                "08:00", "16:00", "pass");
-        u2 = new Utilizador("ana", "Ana", "Costa", "Admin",
-                "09:00", "17:00", "pass");
-        u3 = new Utilizador("bruno", "Bruno", "Santos", "Funcionario",
-                "07:00", "15:00", "pass");
+        // Criar alguns utilizadores com teu construtor atualizado
+        u1 = new Utilizador(
+                "joao", "pass1", "Funcionario",
+                "João", "Silva", "desc", "PT", "2000-01-01",
+                5.0, "08:00", "16:00"
+        );
+
+        u2 = new Utilizador(
+                "ana", "pass2", "Admin",
+                "Ana", "Costa", "desc2", "PT", "1999-06-10",
+                6.0, "09:00", "17:00"
+        );
+
+        u3 = new Utilizador(
+                "bruno", "pass3", "Funcionario",
+                "Bruno", "Santos", "desc3", "PT", "1998-03-20",
+                5.5, "07:00", "15:00"
+        );
     }
 
     @AfterEach
@@ -52,13 +63,12 @@ class UserServiceTest {
     }
 
     // ---------------------------
-    //        TESTE ADD USER
+    //          TESTE ADD USER
     // ---------------------------
 
     @Test
     void testAddUser() throws Exception {
 
-        // Mock para evitar escrita real
         FileWriter writer = mock(FileWriter.class);
         mockFileWriter(writer);
 
@@ -71,7 +81,7 @@ class UserServiceTest {
     }
 
     // ---------------------------
-    //        TESTE REMOVE
+    //          TESTE REMOVE
     // ---------------------------
 
     @Test
@@ -89,7 +99,7 @@ class UserServiceTest {
     }
 
     // ---------------------------
-    //        TESTE UPDATE
+    //         TESTE UPDATE
     // ---------------------------
 
     @Test
@@ -100,8 +110,9 @@ class UserServiceTest {
         service.addUser(u1);
 
         Utilizador novos = new Utilizador(
-                "joao", "João Pedro", "Almeida",
-                "Admin", "08:00", "16:00", "novaPass"
+                "joao", "novaPass", "Admin",
+                "João Pedro", "Almeida", "nova desc", "BR", "2001-05-10",
+                7.5, "08:30", "16:30"
         );
 
         service.updateUser("joao", novos);
@@ -110,10 +121,12 @@ class UserServiceTest {
 
         assertEquals("João Pedro", result.getNome());
         assertEquals("Admin", result.getTipo());
+        assertEquals(7.5, result.getSalario());
+        assertEquals("08:30", result.getTurnoEntrada());
     }
 
     // ---------------------------
-    //        TESTE GET
+    //          TESTE GET
     // ---------------------------
 
     @Test
@@ -125,11 +138,11 @@ class UserServiceTest {
         service.addUser(u2);
 
         assertEquals("Ana", service.getByUsername("ana").getNome());
-        assertNull(service.getByUsername("xxxx"));
+        assertNull(service.getByUsername("inexistente"));
     }
 
     // ---------------------------
-    //   TESTE LISTAGEM ORDENADA
+    //      TESTE LISTAGEM ORDENADA
     // ---------------------------
 
     @Test
@@ -149,7 +162,7 @@ class UserServiceTest {
     }
 
     // ---------------------------
-    //     TESTE POR TIPO
+    //        TESTE POR TIPO
     // ---------------------------
 
     @Test
@@ -169,7 +182,7 @@ class UserServiceTest {
     }
 
     // ---------------------------
-    //   TESTE BUSCAR POR NOME
+    //      TESTE BUSCAR POR NOME
     // ---------------------------
 
     @Test
@@ -206,10 +219,8 @@ class UserServiceTest {
         assertEquals(1, page1.size());
     }
 
-
-
     // =======================================
-    //         AUXILIAR PARA MOCK FILEWRITER
+    //        AUXILIAR PARA MOCK FILEWRITER
     // =======================================
 
     private void mockFileWriter(FileWriter writer) throws Exception {
