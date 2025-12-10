@@ -8,7 +8,7 @@ import com.example.app.menu.estacionamento.MenuRegistarEntrada;
 import com.example.app.menu.estacionamento.MenuRegistarSaida;
 
 import com.example.model.Utilizador;
-import com.example.service.AuthServicetest;
+import com.example.service.AuthService;
 import com.example.service.GestaoEstacionamento;
 import com.example.service.UserService;
 
@@ -24,7 +24,7 @@ public class MenuPrincipal {
 
     private final Scanner sc = new Scanner(System.in);
     private final UserService userService = new UserService();
-    private final AuthServicetest auth = new AuthServicetest(userService);
+    private final AuthService auth = new AuthService(userService);
     private final GestaoEstacionamento gestao = new GestaoEstacionamento(10);
 
     // Cores ANSI

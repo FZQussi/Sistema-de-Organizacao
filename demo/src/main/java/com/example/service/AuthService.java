@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 public class AuthService {
 
-    private static final Logger logger = LogManager.getLogger(AuthServicetest.class);
+    private static final Logger logger = LogManager.getLogger(AuthService.class);
     private final TurnoService turnoService = new TurnoService();
 
     private final UserService userService;

@@ -1,7 +1,7 @@
 package com.example.app.menu.login;
 
 import com.example.model.Utilizador;
-import com.example.service.AuthServicetest;
+import com.example.service.AuthService;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,7 +13,7 @@ class MenuLoginTest {
     void testLoginSucesso() {
 
         // Mock do AuthService
-        AuthServicetest auth = mock(AuthServicetest.class);
+        AuthService auth = mock(AuthService.class);
 
         // Criar utilizador fake usando construtor vazio
         Utilizador fakeUser = new Utilizador();
@@ -39,7 +39,7 @@ class MenuLoginTest {
     @Test
     void testLoginFalha() {
 
-        AuthServicetest auth = mock(AuthServicetest.class);
+        AuthService auth = mock(AuthService.class);
 
         // Mock devolve null para credenciais erradas
         when(auth.login("a", "b")).thenReturn(null);

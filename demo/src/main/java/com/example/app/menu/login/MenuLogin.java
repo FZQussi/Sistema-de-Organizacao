@@ -1,7 +1,7 @@
 package com.example.app.menu.login;
 
 import com.example.model.Utilizador;
-import com.example.service.AuthServicetest;
+import com.example.service.AuthService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class MenuLogin {
 
     private static final Logger logger = LogManager.getLogger(MenuLogin.class);
-    private final AuthServicetest auth;
+    private final AuthService auth;
     private final Scanner sc;
     private final PrintStream out;
 
@@ -28,14 +28,14 @@ public class MenuLogin {
     }
 
     // Construtor testável
-    public MenuLogin(AuthServicetest auth, Scanner sc, PrintStream out) {
+    public MenuLogin(AuthService auth, Scanner sc, PrintStream out) {
         this.auth = auth;
         this.sc = sc;
         this.out = out;
     }
 
     // Construtor normal para uso real
-    public MenuLogin(AuthServicetest auth) {
+    public MenuLogin(AuthService auth) {
         this(auth, new Scanner(System.in), System.out);
     }
 
