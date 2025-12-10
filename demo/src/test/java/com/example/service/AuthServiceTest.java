@@ -5,7 +5,7 @@ import com.example.utils.PasswordUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class AuthService {
+public class AuthServicetest {
 
     private static final Logger logger = LogManager.getLogger(AuthService.class);
     private final TurnoService turnoService = new TurnoService();
@@ -13,7 +13,7 @@ public class AuthService {
     private final UserService userService;
     private Utilizador loggedUser;
 
-    public AuthService(UserService userService) {
+    public AuthServicetest(UserService userService) {
         this.userService = userService;
     }
 
