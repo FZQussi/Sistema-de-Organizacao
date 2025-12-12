@@ -14,22 +14,20 @@ public class MenuGestaoUtilizadores {
     private final UserService userService;
     private final Scanner sc = new Scanner(System.in);
 
-    // Cores ANSI
-    private static final String RESET = "\u001B[0m";
-    private static final String CYAN = "\u001B[36m";
-    private static final String GREEN = "\u001B[32m";
-    private static final String RED = "\u001B[31m";
-    private static final String YELLOW = "\u001B[33m";
-    private static final String BOLD = "\u001B[1m";
+    // Paleta de cores ANSI usada exclusivamente para formatação visual no terminal
+    private static final String RESET = "[0m";
+    private static final String CYAN = "[36m";
+    private static final String GREEN = "[32m";
+    private static final String RED = "[31m";
+    private static final String YELLOW = "[33m";
+    private static final String BOLD = "[1m";
 
+    // Injeção do serviço principal responsável pelo CRUD de utilizadores
     public MenuGestaoUtilizadores(UserService userService) {
         this.userService = userService;
     }
 
-    // ============================================================
-    // MÉTODOS FACTORY — permitem substituir menus durante testes
-    // ============================================================
-
+    // Métodos factory permitem substituir menus em testes unitários, melhorando a testabilidade e isolamento
     protected MenuListagemUtilizadores criarMenuListagem() {
         return new MenuListagemUtilizadores(userService);
     }
@@ -50,8 +48,7 @@ public class MenuGestaoUtilizadores {
         return new MenuPagamentos(userService);
     }
 
-    // ============================================================
-
+    // Renderização do cabeçalho principal do submenu de gestão
     private void header() {
         System.out.println(CYAN + BOLD + "╔═══════════════════════════════════════════════╗");
         System.out.println("║             GESTÃO DE UTILIZADORES            ║");
@@ -59,6 +56,7 @@ public class MenuGestaoUtilizadores {
         System.out.println();
     }
 
+    // Loop principal do menu, controla a navegação entre submenus e valida escolhas do utilizador
     public void mostrar() {
         int opcao;
 
@@ -71,19 +69,24 @@ public class MenuGestaoUtilizadores {
             System.out.println(YELLOW + "3" + RESET + " - Alterar utilizador");
             System.out.println(YELLOW + "4" + RESET + " - Remover utilizador");
             System.out.println(YELLOW + "5" + RESET + " - Pagamentos");
-            System.out.println(YELLOW + "0" + RESET + " - Voltar\n");
+            System.out.println(YELLOW + "0" + RESET + " - Voltar
+");
 
             System.out.print(CYAN + "→ Escolha: " + RESET);
 
+            // Tratamento robusto de entrada numérica para evitar que o menu falhe com caracteres inválidos
             try {
                 opcao = Integer.parseInt(sc.nextLine());
             } catch (NumberFormatException e) {
-                System.out.println(RED + "\n✖ Opcão inválida! Digite um número.\n" + RESET);
+                System.out.println(RED + "
+✖ Opcão inválida! Digite um número.
+" + RESET);
                 logger.warn("Entrada inválida no menu de gestão de utilizadores.", e);
                 opcao = -1;
                 continue;
             }
 
+            // Encaminhamento da escolha para o submenu correspondente
             switch (opcao) {
                 case 1 -> criarMenuListagem().mostrar();
                 case 2 -> criarMenuCriar().mostrar();
@@ -92,16 +95,20 @@ public class MenuGestaoUtilizadores {
                 case 5 -> criarMenuPagamentos().mostrar();
 
                 case 0 -> {
-                    logger.info("Voltando ao menu anterior.");
-                    System.out.println(GREEN + "\n✔ A voltar ao menu principal..." + RESET);
+                    logger.info("A voltar ao menu anterior.");
+                    System.out.println(GREEN + "
+✔ A voltar ao menu principal..." + RESET);
                 }
 
+                // Qualquer número fora das opções previstas gera aviso e repete o menu
                 default -> {
-                    System.out.println(RED + "\n✖ Opcão inválida. Tente novamente.\n" + RESET);
-                    logger.warn("Opção inválida: {}", opcao);
+                    System.out.println(RED + "
+✖ Opcão inválida. Tente novamente.
+" + RESET);
+                    logger.warn("Opção inválida selecionada: {}", opcao);
                 }
             }
 
-        } while (opcao != 0);
+        } while (opcao != 0); // Ciclo mantém-se ativo até o utilizador escolher sair
     }
 }
