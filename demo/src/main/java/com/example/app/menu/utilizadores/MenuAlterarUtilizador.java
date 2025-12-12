@@ -15,12 +15,16 @@ import java.util.Scanner;
 
 public class MenuAlterarUtilizador {
 
+    // Logger para rastreamento de auditoria e depuração
     private static final Logger logger = LogManager.getLogger(MenuAlterarUtilizador.class);
 
+    // Serviço responsável pelas operações relacionadas a utilizadores
     private final UserService userService;
+
+    // Entrada padrão do utilizador
     private final Scanner sc = new Scanner(System.in);
 
-    // Cores ANSI
+    // Códigos ANSI para formatação de console
     private static final String RESET = "\u001B[0m";
     private static final String CYAN = "\u001B[36m";
     private static final String GREEN = "\u001B[32m";
@@ -32,6 +36,7 @@ public class MenuAlterarUtilizador {
         this.userService = userService;
     }
 
+    // Exibe o cabeçalho visual do menu
     private void header() {
         System.out.println(CYAN + BOLD + "╔══════════════════════════════════════════════╗");
         System.out.println("║              ALTERAR UTILIZADOR              ║");
@@ -39,6 +44,7 @@ public class MenuAlterarUtilizador {
         System.out.println();
     }
 
+    // Fluxo principal da alteração de utilizador
     public void mostrar() {
         ConsoleUtils.clear();
         header();
@@ -47,10 +53,12 @@ public class MenuAlterarUtilizador {
 
         System.out.println(YELLOW + "Digite 'ESC' para cancelar a qualquer momento.\n" + RESET);
 
+        // Identificação do utilizador a ser alterado
         System.out.print(YELLOW + "→ Username do utilizador a alterar: " + RESET);
         String uname = sc.nextLine();
         if (uname.equalsIgnoreCase("ESC")) { cancel(); return; }
 
+        // Carrega o utilizador existente
         Utilizador atual = userService.getByUsername(uname);
         if (atual == null) {
             System.out.println(RED + BOLD + "✖ Utilizador não encontrado.\n" + RESET);
@@ -61,27 +69,26 @@ public class MenuAlterarUtilizador {
         System.out.println(CYAN + "\n──────────────────────────────────────────────" + RESET);
         System.out.println(YELLOW + "(Deixe em branco para manter o valor atual)\n" + RESET);
 
-        // ========== Nome ==========
+        // Campo: Nome
         System.out.print(YELLOW + "→ Nome (" + atual.getNome() + "): " + RESET);
         String nome = sc.nextLine();
         if (nome.equalsIgnoreCase("ESC")) { cancel(); return; }
         if (!nome.isEmpty()) atual.setNome(nome);
 
-        // ========== Sobrenome ==========
+        // Campo: Sobrenome
         System.out.print(YELLOW + "→ Sobrenome (" + atual.getSobrenome() + "): " + RESET);
         String sobrenome = sc.nextLine();
         if (sobrenome.equalsIgnoreCase("ESC")) { cancel(); return; }
         if (!sobrenome.isEmpty()) atual.setSobrenome(sobrenome);
 
-        // ========== Descrição ==========
-        System.out.print(YELLOW + "→ Descricão (" + atual.getDescricao() + "): " + RESET);
+        // Campo: Descrição
+        System.out.print(YELLOW + "→ Descrição (" + atual.getDescricao() + "): " + RESET);
         String descricao = sc.nextLine();
         if (descricao.equalsIgnoreCase("ESC")) { cancel(); return; }
         if (!descricao.isEmpty()) atual.setDescricao(descricao);
 
-        // ========== Nacionalidade (validada) ==========
+        // Campo: Nacionalidade (com validação de lista externa)
         List<String> nacionalidadesValidas = FileUtils.carregarNacionalidades();
-        
         System.out.print(YELLOW + "→ Nacionalidade (" + atual.getNacionalidade() + "): " + RESET);
         String nac = sc.nextLine();
         if (nac.equalsIgnoreCase("ESC")) { cancel(); return; }
@@ -99,7 +106,7 @@ public class MenuAlterarUtilizador {
             atual.setNacionalidade(nac);
         }
 
-        // ========== Data de nascimento ==========
+        // Campo: Data de nascimento
         System.out.print(YELLOW + "→ Data de nascimento (" + atual.getDataNascimento() + "): " + RESET);
         String dataInput = sc.nextLine();
         if (dataInput.equalsIgnoreCase("ESC")) { cancel(); return; }
@@ -108,7 +115,7 @@ public class MenuAlterarUtilizador {
             boolean valido = false;
             while (!valido) {
                 try {
-                    LocalDate.parse(dataInput, formatter);
+                    LocalDate.parse(dataInput, formatter); // Validação de formato
                     atual.setDataNascimento(dataInput);
                     valido = true;
                 } catch (DateTimeParseException e) {
@@ -122,31 +129,31 @@ public class MenuAlterarUtilizador {
             }
         }
 
-        // ========== Salário ==========
+        // Campo: Salário
         System.out.print(YELLOW + "→ Salário (" + atual.getSalario() + "): " + RESET);
         String sal = sc.nextLine();
         if (sal.equalsIgnoreCase("ESC")) { cancel(); return; }
         if (!sal.isEmpty()) atual.setSalario(Double.parseDouble(sal));
 
-        // ========== Turno Entrada ==========
+        // Campo: Turno de Entrada
         System.out.print(YELLOW + "→ Hora Entrada (" + atual.getTurnoEntrada() + "): " + RESET);
         String te = sc.nextLine();
         if (te.equalsIgnoreCase("ESC")) { cancel(); return; }
         if (!te.isEmpty()) atual.setTurnoEntrada(te);
 
-        // ========== Turno Saída ==========
+        // Campo: Turno de Saída
         System.out.print(YELLOW + "→ Hora Saída (" + atual.getTurnoSaida() + "): " + RESET);
         String ts = sc.nextLine();
         if (ts.equalsIgnoreCase("ESC")) { cancel(); return; }
         if (!ts.isEmpty()) atual.setTurnoSaida(ts);
 
-        // ========== Tipo ==========
+        // Campo: Tipo de Utilizador
         System.out.print(YELLOW + "→ Tipo (" + atual.getTipo() + ") [operador/gerente]: " + RESET);
         String tipo = sc.nextLine();
         if (tipo.equalsIgnoreCase("ESC")) { cancel(); return; }
         if (!tipo.isEmpty()) atual.setTipo(tipo);
 
-        // ========== Guardar ==========
+        // Atualização final no sistema
         userService.updateUser(uname, atual);
 
         System.out.println(CYAN + "\n──────────────────────────────────────────────" + RESET);
@@ -154,40 +161,42 @@ public class MenuAlterarUtilizador {
         logger.info("Utilizador alterado: {}", uname);
     }
 
+    // Mensagem de cancelamento da operação
     private void cancel() {
-        System.out.println(RED + "\n⚠ Operacão cancelada. Voltando ao menu anterior." + RESET);
-        logger.info("Operacão de alteracão cancelada pelo utilizador.");
+        System.out.println(RED + "\n⚠ Operação cancelada. Voltando ao menu anterior." + RESET);
+        logger.info("Operação de alteração cancelada pelo utilizador.");
     }
-    // MÉTODO AUXILIAR PARA TESTES (sem Scanner)
-public boolean alterarUtilizador(
-        String username,
-        String nome,
-        String sobrenome,
-        String descricao,
-        String nacionalidade,
-        String dataNascimento,
-        String salario,
-        String turnoEntrada,
-        String turnoSaida,
-        String tipo) {
 
-    Utilizador atual = userService.getByUsername(username);
-    if (atual == null) return false;
+    // Método auxiliar para testes unitários sem interação manual
+    public boolean alterarUtilizador(
+            String username,
+            String nome,
+            String sobrenome,
+            String descricao,
+            String nacionalidade,
+            String dataNascimento,
+            String salario,
+            String turnoEntrada,
+            String turnoSaida,
+            String tipo) {
 
-    if (!nome.isEmpty()) atual.setNome(nome);
-    if (!sobrenome.isEmpty()) atual.setSobrenome(sobrenome);
-    if (!descricao.isEmpty()) atual.setDescricao(descricao);
-    if (!nacionalidade.isEmpty()) atual.setNacionalidade(nacionalidade);
-    if (!dataNascimento.isEmpty()) atual.setDataNascimento(dataNascimento);
-    if (!salario.isEmpty()) atual.setSalario(Double.parseDouble(salario));
-    if (!turnoEntrada.isEmpty()) atual.setTurnoEntrada(turnoEntrada);
-    if (!turnoSaida.isEmpty()) atual.setTurnoSaida(turnoSaida);
-    if (!tipo.isEmpty()) atual.setTipo(tipo);
+        Utilizador atual = userService.getByUsername(username);
+        if (atual == null) return false;
 
-    userService.updateUser(username, atual);
+        if (!nome.isEmpty()) atual.setNome(nome);
+        if (!sobrenome.isEmpty()) atual.setSobrenome(sobrenome);
+        if (!descricao.isEmpty()) atual.setDescricao(descricao);
+        if (!nacionalidade.isEmpty()) atual.setNacionalidade(nacionalidade);
+        if (!dataNascimento.isEmpty()) atual.setDataNascimento(dataNascimento);
+        if (!salario.isEmpty()) atual.setSalario(Double.parseDouble(salario));
+        if (!turnoEntrada.isEmpty()) atual.setTurnoEntrada(turnoEntrada);
+        if (!turnoSaida.isEmpty()) atual.setTurnoSaida(turnoSaida);
+        if (!tipo.isEmpty()) atual.setTipo(tipo);
 
-    return true;
-}
+        userService.updateUser(username, atual);
 
-}
+        return true;
+    }
+
+    }
 
