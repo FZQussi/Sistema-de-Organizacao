@@ -69,8 +69,7 @@ public class MenuGestaoUtilizadores {
             System.out.println(YELLOW + "3" + RESET + " - Alterar utilizador");
             System.out.println(YELLOW + "4" + RESET + " - Remover utilizador");
             System.out.println(YELLOW + "5" + RESET + " - Pagamentos");
-            System.out.println(YELLOW + "0" + RESET + " - Voltar
-");
+            System.out.println(YELLOW + "0" + RESET + " - Voltar");
 
             System.out.print(CYAN + "→ Escolha: " + RESET);
 
@@ -78,9 +77,7 @@ public class MenuGestaoUtilizadores {
             try {
                 opcao = Integer.parseInt(sc.nextLine());
             } catch (NumberFormatException e) {
-                System.out.println(RED + "
-✖ Opcão inválida! Digite um número.
-" + RESET);
+                System.out.println(RED + "✖ Opcão inválida! Digite um número." + RESET);
                 logger.warn("Entrada inválida no menu de gestão de utilizadores.", e);
                 opcao = -1;
                 continue;
@@ -96,15 +93,12 @@ public class MenuGestaoUtilizadores {
 
                 case 0 -> {
                     logger.info("A voltar ao menu anterior.");
-                    System.out.println(GREEN + "
-✔ A voltar ao menu principal..." + RESET);
+                    System.out.println(GREEN + "✔ A voltar ao menu principal..." + RESET);
                 }
 
                 // Qualquer número fora das opções previstas gera aviso e repete o menu
                 default -> {
-                    System.out.println(RED + "
-✖ Opcão inválida. Tente novamente.
-" + RESET);
+                    System.out.println(RED + "✖ Opcão inválida. Tente novamente." + RESET);
                     logger.warn("Opção inválida selecionada: {}", opcao);
                 }
             }
