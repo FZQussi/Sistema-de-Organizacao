@@ -18,16 +18,27 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
+/**
+ * Menu principal da aplicação.
+ * Responsável por iniciar o sistema, gerir o login
+ * e apresentar as opções conforme o perfil do utilizador.
+ */
 public class MenuPrincipal {
 
+    // Logger para auditoria de acessos e ações do utilizador
     private static final Logger logger = LogManager.getLogger(MenuPrincipal.class);
 
+    // Scanner partilhado para leitura de dados do utilizador
     private final Scanner sc = new Scanner(System.in);
+
+    // Serviços centrais da aplicação
     private final UserService userService = new UserService();
     private final AuthService auth = new AuthService(userService);
+
+    // Serviço de gestão do estacionamento (capacidade definida no arranque)
     private final GestaoEstacionamento gestao = new GestaoEstacionamento(10);
 
-    // Cores ANSI
+    // Códigos ANSI para cores e formatação no terminal
     private static final String RESET = "\u001B[0m";
     private static final String CYAN = "\u001B[36m";
     private static final String GREEN = "\u001B[32m";
@@ -35,23 +46,29 @@ public class MenuPrincipal {
     private static final String YELLOW = "\u001B[33m";
     private static final String BOLD = "\u001B[1m";
 
+    /**
+     * Método de arranque da aplicação.
+     * Controla o fluxo de login e o ciclo principal do sistema.
+     */
     public void iniciar() {
 
+        // Limpa a consola e apresenta o cabeçalho inicial
         ConsoleUtils.clear();
         System.out.println(CYAN + BOLD + "╔═══════════════════════════════════════════════╗");
         System.out.println("║              SISTEMA DE GESTÃO               ║");
         System.out.println("╚═══════════════════════════════════════════════╝" + RESET);
 
-        // 🔐 LOGIN
+        // 🔐 Processo de login
         Utilizador loggedUser = new MenuLogin(auth).mostrar();
 
-        // 🔁 CICLO PRINCIPAL
+        // 🔁 Ciclo principal do menu
         while (true) {
             ConsoleUtils.clear();
             System.out.println(CYAN + BOLD + "\n╔═══════════════════════════════════════════════╗");
             System.out.println("║                  MENU PRINCIPAL              ║");
             System.out.println("╚═══════════════════════════════════════════════╝" + RESET);
 
+            // Apresenta opções conforme o tipo de utilizador
             if (loggedUser.getTipo().equals("gerente")) {
                 System.out.println(YELLOW + "1" + RESET + " - Gestão de Utilizadores");
                 System.out.println(YELLOW + "2" + RESET + " - Registrar entrada");
@@ -65,9 +82,11 @@ public class MenuPrincipal {
                 System.out.println(YELLOW + "0" + RESET + " - Sair");
             }
 
+            // Leitura da opção selecionada
             System.out.print(CYAN + "→ Escolha: " + RESET);
             int escolha = lerOpcao();
 
+            // Encaminhamento conforme perfil do utilizador
             if (loggedUser.getTipo().equals("gerente")) {
                 handleGerente(loggedUser, escolha);
             } else {
@@ -80,6 +99,11 @@ public class MenuPrincipal {
     //              MÉTODOS DE APOIO
     // ============================================
 
+    /**
+     * Lê e valida a opção introduzida pelo utilizador.
+     *
+     * @return opção válida ou -1 em caso de erro
+     */
     private int lerOpcao() {
         try {
             return Integer.parseInt(sc.nextLine().trim());
@@ -90,6 +114,12 @@ public class MenuPrincipal {
         }
     }
 
+    /**
+     * Processa as opções disponíveis para o perfil gerente.
+     *
+     * @param user utilizador autenticado
+     * @param escolha opção selecionada
+     */
     private void handleGerente(Utilizador user, int escolha) {
         switch (escolha) {
 
@@ -101,7 +131,6 @@ public class MenuPrincipal {
             case 2 -> {
                 logger.info("Gerente '{}' acedeu ao registo de entradas.", user.getUsername());
                 new MenuRegistarEntrada(gestao, sc, System.out).mostrar();
-
             }
 
             case 3 -> {
@@ -123,13 +152,18 @@ public class MenuPrincipal {
         }
     }
 
+    /**
+     * Processa as opções disponíveis para o perfil operador.
+     *
+     * @param user utilizador autenticado
+     * @param escolha opção selecionada
+     */
     private void handleOperador(Utilizador user, int escolha) {
         switch (escolha) {
 
             case 1 -> {
                 logger.info("Operador '{}' acedeu ao registo de entradas.", user.getUsername());
                 new MenuRegistarEntrada(gestao, sc, System.out).mostrar();
-
             }
 
             case 2 -> {
@@ -151,6 +185,11 @@ public class MenuPrincipal {
         }
     }
 
+    /**
+     * Termina a sessão do utilizador e encerra a aplicação.
+     *
+     * @param user utilizador autenticado
+     */
     private void sair(Utilizador user) {
         auth.logout();
         logger.info("Usuário '{}' fez logout.", user.getUsername());
