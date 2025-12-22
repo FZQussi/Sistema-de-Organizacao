@@ -202,11 +202,3 @@ Projeto desenvolvido para fins **académicos e de aprendizagem**, com foco em:
 
 ---
 
-Se quiseres, posso:
-
-* Ajustar o README para **entrega universitária**
-* Criar **badges do GitHub** (build, Java, Maven)
-* Gerar **diagramas UML**
-* Escrever um **CONTRIBUTING.md** ou **LICENSE**
-
-É só dizer.
